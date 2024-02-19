@@ -12,7 +12,6 @@ body {
 .cl-card {
   font-size: 14px;
   text-transform: none;
-  background-color: rgb(30 41 59);
   box-shadow: none;
   padding: 1;
 }
@@ -29,14 +28,4 @@ body {
 .cl-formButtonPrimary {
   font-size: 14px;
   text-transform: none;
-  background-color: rgb(15 23 42);
-}
-
-.cl-footerActionLink {
-  color: white;
-  text-decoration: underline;
-}
-
-.cl-footerActionLink:hover {
-  color: lightgray;
 }

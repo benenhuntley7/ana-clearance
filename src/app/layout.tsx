@@ -18,15 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
+    <ClerkProvider>
       <html lang="en" data-theme="winter">
         <body className={`flex min-h-screen flex-col ${inter.className}`}>
           <Nav />
-          {children}
+          <main className="flex-grow overflow-y-auto sticky top-0 z-50">{children}</main>
         </body>
       </html>
     </ClerkProvider>

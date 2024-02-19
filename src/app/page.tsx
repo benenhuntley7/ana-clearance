@@ -32,7 +32,7 @@ export default async function Home() {
       <ClerkLoading>
         <LoadingPage />
       </ClerkLoading>
-      <main className="flex  flex-col  justify-between p-6">
+      <div className="flex  flex-col  justify-between p-6">
         <div className="z-10 max-w-5xl w-full items-center justify-between p-3 font-mono text-sm lg:flex">
           <FolderForm />
         </div>
@@ -41,7 +41,7 @@ export default async function Home() {
             <p key={folder.id}>{folder.name}</p>
           ))}
         </div>
-      </main>
+      </div>
     </>
   );
 }

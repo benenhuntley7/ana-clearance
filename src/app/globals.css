@@ -2,32 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.cl-rootBox,
+.cl-signIn-root,
+.cl-internal-phfxlr,
+.cl-card {
+  font-size: 14px;
+  text-transform: none;
+  background-color: rgb(30 41 59);
+  box-shadow: none;
+  padding: 1;
+}
+
+.cl-internal-b3fm6y,
+.cl-headerSubtitle {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.cl-formButtonPrimary {
+  font-size: 14px;
+  text-transform: none;
+  background-color: rgb(15 23 42);
+}
+
+.cl-footerActionLink {
+  color: white;
+  text-decoration: underline;
+}
+
+.cl-footerActionLink:hover {
+  color: lightgray;
 }

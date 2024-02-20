@@ -23,7 +23,7 @@ export default function RootLayout({
         <head></head>
         <body className={`flex min-h-screen flex-col ${inter.className}`}>
           <Nav />
-          <main className="flex-grow overflow-y-auto sticky top-0 z-50">{children}</main>
+          <main className="">{children}</main>
         </body>
       </html>
     </ClerkProvider>

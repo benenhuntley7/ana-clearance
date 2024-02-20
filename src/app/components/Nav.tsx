@@ -26,9 +26,6 @@ export default function Nav() {
               </>
             )}
           </SignedIn>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
         </div>
       </nav>
     </header>

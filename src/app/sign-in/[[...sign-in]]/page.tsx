@@ -8,8 +8,8 @@ export default function Page() {
         <LoadingPage />
       </ClerkLoading>
       <ClerkLoaded>
-        <div className="min-h-screen flex justify-center md:items-center">
-          <div className="flex justify-center md:items-center p-1">
+        <div className="flex justify-center">
+          <div className="flex justify-center p-1">
             <SignIn />
           </div>
         </div>

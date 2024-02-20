@@ -1,4 +1,4 @@
-import { ClerkLoading, auth } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import FolderForm from "./components/FolderForm";
@@ -32,16 +32,18 @@ export default async function Home() {
       <ClerkLoading>
         <LoadingPage />
       </ClerkLoading>
-      <div className="flex  flex-col  justify-between p-6">
-        <div className="z-10 max-w-5xl w-full items-center justify-between p-3 font-mono text-sm lg:flex">
-          <FolderForm />
+      <ClerkLoaded>
+        <div className="flex  flex-col  justify-between p-6">
+          <div className="z-10 max-w-5xl w-full items-center justify-between p-3 font-mono text-sm lg:flex">
+            <FolderForm />
+          </div>
+          <div className="flex flex-col mb-10">
+            {folders.map((folder) => (
+              <p key={folder.id}>{folder.name}</p>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col mb-10">
-          {folders.map((folder) => (
-            <p key={folder.id}>{folder.name}</p>
-          ))}
-        </div>
-      </div>
+      </ClerkLoaded>
     </>
   );
 }

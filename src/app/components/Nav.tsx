@@ -17,7 +17,7 @@ export default function Nav() {
             {checkRole("admin") && (
               <>
                 <Link href="/dashboard" className="mr-4">
-                  Dashboard
+                  Admin
                 </Link>
                 <Link href="/import" className="mr-4">
                   Import

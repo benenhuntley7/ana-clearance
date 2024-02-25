@@ -5,14 +5,17 @@ import Link from "next/link";
 
 export default function Nav() {
   return (
-    <header>
-      <nav className="flex border-b justify-between items-center border-slate-400 p-4 bg-[#F58220]" aria-label="Global">
+    <header className=" sticky top-0 z-50 ">
+      <nav
+        className="flex border-b justify-between items-center h-14 p-5 border-slate-400 bg-[#F58220]"
+        aria-label="Global"
+      >
         <div className="flex">
           <Link href="/" className="-m-1.5 p-1.5">
             <Image src={"/anaconda-footerimg.png"} alt="Anaconda" width={150} height={20} />
           </Link>
         </div>
-        <div className="flex items-center font-semibold text-white">
+        <div className="flex items-center font-medium text-white">
           <SignedIn>
             {checkRole("admin") && (
               <>

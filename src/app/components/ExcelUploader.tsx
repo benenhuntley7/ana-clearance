@@ -1,12 +1,16 @@
 "use client";
 // components/ExcelUploader.tsx
+import { createClient } from "@supabase/supabase-js";
 import React, { useState, ChangeEvent } from "react";
 import * as XLSX from "xlsx";
 
 const ExcelUploader = () => {
   const [fileData, setFileData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const numRowsToDisplay = 200;
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    setLoading(true);
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       const reader = new FileReader();
@@ -15,50 +19,153 @@ const ExcelUploader = () => {
         const workbook = XLSX.read(bstr, { type: "binary" });
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-        const data = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
+        let data = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 }) as any[][];
+
+        // Filter the data based on conditions
+        data = data.filter((row) => row[13] !== 0 && (row[3] === "Z4" || row[3] === "Z5"));
+
+        // Remove text and convert to numeric for each cell at position 8
+        data = data.map((row) => {
+          // Parse numeric part of the string in row[8]
+          const numericValue = parseFloat(row[8]);
+          // Update row[8] with the numeric value
+          row[8] = isNaN(numericValue) ? null : numericValue;
+          return row;
+        });
+
         setFileData(data);
+
+        setLoading(false);
       };
       reader.readAsArrayBuffer(selectedFile);
     }
   };
 
+  function getCurrentFinancialWeekNumber(): string {
+    const today: Date = new Date();
+    const year: number = today.getFullYear();
+
+    // Set the start date of the financial year (July 1st of the previous year)
+    const financialYearStart: Date = new Date(year - 1, 6, 1); // Month is 0-indexed, so 6 is July
+
+    // Calculate the difference in days between today and the start of the financial year
+    const dayDifference: number = Math.floor((today.getTime() - financialYearStart.getTime()) / (24 * 60 * 60 * 1000));
+
+    // Calculate the current financial week number
+    const currentFinancialWeekNumber: number = Math.ceil((dayDifference + 1) / 7);
+
+    // Format the result as "YYYY.WW"
+    const result: string = `${year}.${currentFinancialWeekNumber}`;
+
+    return result;
+  }
+
+  function uploadData() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseKey || !supabaseUrl) {
+      throw new Error("Supabase key or URL is missing. Make sure they're set in the environment variables.");
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Extract relevant data for insertion
+    const dataToInsert = fileData.map((row) => ({
+      store: row[4],
+      article: row[6],
+      description: row[7],
+      z_status: row[3],
+      cost: row[14],
+      rrp: row[8],
+      soh: row[13],
+      week: getCurrentFinancialWeekNumber().split(".")[1],
+      year: getCurrentFinancialWeekNumber().split(".")[0],
+      department: row[0],
+      sub_department: row[1],
+    }));
+
+    // Concatenate multiple columns for onConflict
+    const onConflictColumns = ["store", "article", "week", "year"].join(",");
+
+    // Upload data to Supabase
+    const uploadPromise = Promise.resolve(
+      supabase.from("stock").upsert(dataToInsert, { onConflict: onConflictColumns })
+    );
+
+    uploadPromise
+      .then((response) => {
+        console.log("Data uploaded successfully:", response);
+        setFileData([]);
+      })
+      .catch((error) => {
+        console.error("Error uploading data:", error);
+      });
+  }
+
   return (
     <div>
-      <input
-        className=" file-input file-input-bordered w-full max-w-xs mb-5"
-        type="file"
-        name="file"
-        onChange={handleFileChange}
-      />
+      {!fileData.length && (
+        <input
+          className="file-input file-input-bordered w-full max-w-xs mb-5 me-4"
+          type="file"
+          id="fileInput"
+          name="file"
+          onChange={handleFileChange}
+        />
+      )}
+      {/* display loading whilst file is being uploaded*/}
+      {loading && <div className="text-center text-xl">Loading...</div>}
+
       {fileData.length > 0 && (
-        <table className="table-zebra hidden md:block">
-          <thead className=" border border-l-0 border-r-0 border-t-0">
-            <tr>
-              <TH data="Article" />
-              <TH data="EAN" />
-              <TH data="Description" />
-              <TH data="Z Status" />
-              <TH data="MAP" />
-              <TH data="RRP" />
-              <TH data="GM" />
-              <TH data="SOH" />
-            </tr>
-          </thead>
-          <tbody>
-            {fileData.map((row, index) => (
-              <tr key={index} className="p-1">
-                <TD data={row[1]} />
-                <TD data={row[2]} />
-                <TD data={row[3]} />
-                <TD data={row[4]} />
-                <TD data={row[6]} />
-                <TD data={row[7]} />
-                <TD data={row[8]} />
-                <TD data={row[19]} />
+        <>
+          <label htmlFor="weekNumber" className="pe-4">
+            Select Week:
+          </label>
+          <input
+            className="input input-bordered"
+            id="weekNumber"
+            name="weekNumber"
+            defaultValue={getCurrentFinancialWeekNumber()}
+          />
+          <button className="btn btn-outline ms-4" onClick={uploadData}>
+            Submit
+          </button>
+          <button className="btn btn-outline ms-4" onClick={() => setFileData([])}>
+            Clear
+          </button>
+          <div className="py-3">
+            Displaying {numRowsToDisplay} of {fileData.length} rows
+          </div>
+          <table className="table-zebra hidden md:block">
+            <thead className=" border border-l-0 border-r-0 border-t-0">
+              <tr>
+                <TH data="Store" />
+                <TH data="Article" />
+                <TH data="Description" />
+                <TH data="Z Status" />
+                <TH data="MAP" />
+                <TH data="RRP" />
+                <TH data="GM" />
+                <TH data="SOH" />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {fileData.slice(0, numRowsToDisplay).map((row, index) => (
+                <tr key={index} className="p-1">
+                  <TD data={row[4]} />
+                  <TD data={row[6]} />
+                  <TD data={row[7]} />
+                  <TD data={row[3]} />
+                  <TD data={row[14]} />
+                  <TD data={row[8]} />
+                  <TD data={row[7]} />
+                  <TD data={row[13]} />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import "./globals.css";
 import Nav from "./components/Nav";
 
@@ -19,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" data-theme="winter">
+      <html lang="en" data-theme="light">
         <head></head>
         <body className={`flex min-h-screen flex-col ${inter.className}`}>
           <Nav />

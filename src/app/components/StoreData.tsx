@@ -152,24 +152,34 @@ export default function StoreData() {
                   <tr>
                     <th>Article</th>
                     <th>Description</th>
-                    <th>MAP</th>
-                    <th>SOH@Cost</th>
-                    <th>RRP</th>
-                    <th>Z-Status</th>
-                    <th>SOH</th>
+                    <th className="hidden sm:table-cell">MAP</th>
+                    <th className="hidden sm:table-cell">SOH@Cost</th>
+                    <th className="hidden sm:table-cell">RRP</th>
+                    <th className="hidden sm:table-cell">Z-Status</th>
+                    <th className="hidden sm:table-cell">SOH</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredData.map((row, index) => (
-                    <tr key={index} className="block sm:table-row">
-                      <td className="mb-2 sm:table-cell">{row.article}</td>
-                      <td className="mb-2 sm:table-cell">{row.description}</td>
-                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.map)}</td>
-                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.cost)}</td>
-                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.rrp)}</td>
-                      <td className="mb-2 sm:table-cell">{row.z_status}</td>
-                      <td className="mb-2 sm:table-cell">{row.soh}</td>
-                    </tr>
+                    <React.Fragment key={index}>
+                      <tr className="block sm:flex sm:flex-wrap">
+                        <td className="mb-2 sm:w-full">{row.article}</td>
+                        <td className="mb-2 sm:w-full">{row.description}</td>
+                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.map)}</td>
+                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.cost)}</td>
+                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.rrp)}</td>
+                        <td className="hidden sm:table-cell">{row.z_status}</td>
+                        <td className="hidden sm:table-cell">{row.soh}</td>
+                      </tr>
+                      <tr className="hidden sm:flex">
+                        <td colSpan={2}></td>
+                        <td>{CurrencyFormatter.format(row.map)}</td>
+                        <td>{CurrencyFormatter.format(row.cost)}</td>
+                        <td>{CurrencyFormatter.format(row.rrp)}</td>
+                        <td>{row.z_status}</td>
+                        <td>{row.soh}</td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>

@@ -100,10 +100,7 @@ export default function StoreData() {
 
   return (
     <>
-      <div
-        style={{ maxHeight: "calc(100vh - 70px)", maxWidth: "calc(100vw - 20px)" }}
-        className="overflow-y-auto mx-auto w-full"
-      >
+      <div style={{ maxHeight: "calc(100vh - 70px)" }} className="overflow-y-auto mx-auto w-full">
         <div className="mb-4 flex gap-x-2 justify-center items-center">
           <form>
             <div className="flex justify-between p-4">

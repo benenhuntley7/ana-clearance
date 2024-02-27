@@ -183,7 +183,7 @@ export default function StoreData() {
                       <label className="block pe-2">{row.article}</label>
                       <label className="block font-bold">{row.description}</label>
                     </div>
-                    <div className="flex">
+                    <div className="flex bg-slate-300">
                       <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
                       <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
                       <label className="block pe-2">RRP: {CurrencyFormatter.format(row.rrp)}</label>

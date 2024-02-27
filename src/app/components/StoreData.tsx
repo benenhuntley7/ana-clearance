@@ -100,51 +100,59 @@ export default function StoreData() {
 
   return (
     <>
-      <form className="mb-4 w-52 flex gap-x-2 items-center">
-        <div className="flex justify-between p-6">
-          <label className="form-control w-full max-w-xs">
-            <select
-              id="storeSelect"
-              className="select select-bordered"
-              onChange={(e) =>
-                getStoreData(e.target.value, (document.getElementById("departmentSelect") as HTMLSelectElement)?.value)
-              }
-            >
-              <option disabled defaultValue="">
-                Choose Store
-              </option>
-              {uniqueStores.map((store) => (
-                <option key={store} value={store}>
-                  {store}
+      <div className="mb-4 flex gap-x-2 justify-center items-center">
+        <form>
+          <div className="flex justify-between p-4">
+            <label className="form-control w-full max-w-xs">
+              <select
+                id="storeSelect"
+                className="select select-bordered"
+                onChange={(e) =>
+                  getStoreData(
+                    e.target.value,
+                    (document.getElementById("departmentSelect") as HTMLSelectElement)?.value
+                  )
+                }
+              >
+                <option disabled defaultValue="">
+                  Choose Store
                 </option>
-              ))}
-            </select>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <select
-              id="departmentSelect"
-              className="select select-bordered mx-5"
-              onChange={(e) =>
-                getDepartmentData(e.target.value, (document.getElementById("storeSelect") as HTMLSelectElement)?.value)
-              }
-            >
-              <option disabled defaultValue="">
-                Choose Department
-              </option>
-              <option value="all">All Departments</option>
-              {uniqueDepartments.map((department) => (
-                <option key={department} value={department}>
-                  {department}
+                {uniqueStores.map((store) => (
+                  <option key={store} value={store}>
+                    {store}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <select
+                id="departmentSelect"
+                className="select select-bordered mx-5"
+                onChange={(e) =>
+                  getDepartmentData(
+                    e.target.value,
+                    (document.getElementById("storeSelect") as HTMLSelectElement)?.value
+                  )
+                }
+              >
+                <option disabled defaultValue="">
+                  Choose Department
                 </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </form>
+                <option value="all">All Departments</option>
+                {uniqueDepartments.map((department) => (
+                  <option key={department} value={department}>
+                    {department}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </form>
+      </div>
       {storeData && storeData.length > 0 && (
         <>
           <BarChart data={storeTotals} />
-          <div className="mt-5 px-0 md:px-40">
+          <div className="mt-5 px-2 md:px-40">
             <p className="p-2">{filteredData.length} clearance lines</p>
             <div className="overflow-x-auto">
               {/* Display table on medium or larger screens */}
@@ -187,7 +195,7 @@ export default function StoreData() {
                       <div className="pe-5">
                         <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
                         <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
-                        <label className="block pe-2">RRP: {CurrencyFormatter.format(row.rrp)}</label>
+                        <label className="block pe-2">RRP: ${CurrencyFormatter.format(row.rrp)}</label>
                       </div>
                       <div>
                         <label className="block pe-2">Z-Status: {row.z_status}</label>

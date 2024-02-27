@@ -100,7 +100,7 @@ export default function StoreData() {
 
   return (
     <>
-      <div style={{ maxHeight: "calc(100vh - 70px)" }} className="overflow-y-auto mx-auto w-full">
+      <div style={{ maxHeight: "calc(100vh - 70px)" }} className="overflow-y-auto mx-auto w-full p-4">
         <div className="mb-4 flex gap-x-2 justify-center items-center">
           <form>
             <div className="flex justify-between p-4">
@@ -187,7 +187,7 @@ export default function StoreData() {
                 {/* Display div with labels on smaller screens */}
                 <div className="md:hidden text-sm">
                   {filteredData.map((row, index) => (
-                    <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-200" : "bg-white"}`}>
+                    <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}>
                       <div className="flex">
                         <label className="block pe-2">{row.article}</label>
                         <label className="block font-bold">{row.description}</label>

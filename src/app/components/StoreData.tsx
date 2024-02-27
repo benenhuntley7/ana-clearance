@@ -156,7 +156,7 @@ export default function StoreData() {
             <p className="p-2">{filteredData.length} clearance lines</p>
             <div className="overflow-x-auto">
               {/* Display table on medium or larger screens */}
-              <table className="hidden md:table">
+              <table className="hidden md:table table-zebra-zebra">
                 <thead>
                   <tr>
                     <th>Article</th>
@@ -186,7 +186,7 @@ export default function StoreData() {
               {/* Display div with labels on smaller screens */}
               <div className="md:hidden text-sm">
                 {filteredData.map((row, index) => (
-                  <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-slate-200" : "bg-white"}`}>
+                  <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-200" : "bg-white"}`}>
                     <div className="flex">
                       <label className="block pe-2">{row.article}</label>
                       <label className="block font-bold">{row.description}</label>

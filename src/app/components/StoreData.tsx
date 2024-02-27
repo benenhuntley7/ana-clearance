@@ -100,116 +100,118 @@ export default function StoreData() {
 
   return (
     <>
-      <div className="mb-4 flex gap-x-2 justify-center items-center">
-        <form>
-          <div className="flex justify-between p-4">
-            <label className="form-control w-full max-w-xs">
-              <select
-                id="storeSelect"
-                className="select select-bordered"
-                onChange={(e) =>
-                  getStoreData(
-                    e.target.value,
-                    (document.getElementById("departmentSelect") as HTMLSelectElement)?.value
-                  )
-                }
-              >
-                <option disabled defaultValue="">
-                  Choose Store
-                </option>
-                {uniqueStores.map((store) => (
-                  <option key={store} value={store}>
-                    {store}
+      <div style={{ maxHeight: "calc(100vh - 70px)" }} className="overflow-y-auto mx-auto w-full">
+        <div className="mb-4 flex gap-x-2 justify-center items-center">
+          <form>
+            <div className="flex justify-between p-4">
+              <label className="form-control w-full max-w-xs">
+                <select
+                  id="storeSelect"
+                  className="select select-bordered"
+                  onChange={(e) =>
+                    getStoreData(
+                      e.target.value,
+                      (document.getElementById("departmentSelect") as HTMLSelectElement)?.value
+                    )
+                  }
+                >
+                  <option disabled defaultValue="">
+                    Choose Store
                   </option>
-                ))}
-              </select>
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <select
-                id="departmentSelect"
-                className="select select-bordered mx-5"
-                onChange={(e) =>
-                  getDepartmentData(
-                    e.target.value,
-                    (document.getElementById("storeSelect") as HTMLSelectElement)?.value
-                  )
-                }
-              >
-                <option disabled defaultValue="">
-                  Choose Department
-                </option>
-                <option value="all">All Departments</option>
-                {uniqueDepartments.map((department) => (
-                  <option key={department} value={department}>
-                    {department}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </form>
-      </div>
-      {storeData && storeData.length > 0 && (
-        <>
-          <BarChart data={storeTotals} />
-          <div className="mt-5 px-2 md:px-40">
-            <p className="p-2">{filteredData.length} clearance lines</p>
-            <div className="overflow-x-auto">
-              {/* Display table on medium or larger screens */}
-              <table className="hidden md:table table-zebra-zebra">
-                <thead>
-                  <tr>
-                    <th>Article</th>
-                    <th>Description</th>
-                    <th>MAP</th>
-                    <th>SOH@Cost</th>
-                    <th>RRP</th>
-                    <th>Z-Status</th>
-                    <th>SOH</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.article}</td>
-                      <td>{row.description}</td>
-                      <td>{CurrencyFormatter.format(row.map)}</td>
-                      <td>{CurrencyFormatter.format(row.cost)}</td>
-                      <td>{CurrencyFormatter.format(row.rrp)}</td>
-                      <td>{row.z_status}</td>
-                      <td>{row.soh}</td>
-                    </tr>
+                  {uniqueStores.map((store) => (
+                    <option key={store} value={store}>
+                      {store}
+                    </option>
                   ))}
-                </tbody>
-              </table>
+                </select>
+              </label>
+              <label className="form-control w-full max-w-xs">
+                <select
+                  id="departmentSelect"
+                  className="select select-bordered mx-5"
+                  onChange={(e) =>
+                    getDepartmentData(
+                      e.target.value,
+                      (document.getElementById("storeSelect") as HTMLSelectElement)?.value
+                    )
+                  }
+                >
+                  <option disabled defaultValue="">
+                    Choose Department
+                  </option>
+                  <option value="all">All Departments</option>
+                  {uniqueDepartments.map((department) => (
+                    <option key={department} value={department}>
+                      {department}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </form>
+        </div>
+        {storeData && storeData.length > 0 && (
+          <>
+            <BarChart data={storeTotals} />
+            <div className="mt-5 px-2 md:px-40">
+              <p className="p-2">{filteredData.length} clearance lines</p>
+              <div className="overflow-x-auto">
+                {/* Display table on medium or larger screens */}
+                <table className="hidden md:table table-zebra-zebra">
+                  <thead>
+                    <tr>
+                      <th>Article</th>
+                      <th>Description</th>
+                      <th>MAP</th>
+                      <th>SOH@Cost</th>
+                      <th>RRP</th>
+                      <th>Z-Status</th>
+                      <th>SOH</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.article}</td>
+                        <td>{row.description}</td>
+                        <td>{CurrencyFormatter.format(row.map)}</td>
+                        <td>{CurrencyFormatter.format(row.cost)}</td>
+                        <td>{CurrencyFormatter.format(row.rrp)}</td>
+                        <td>{row.z_status}</td>
+                        <td>{row.soh}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
 
-              {/* Display div with labels on smaller screens */}
-              <div className="md:hidden text-sm">
-                {filteredData.map((row, index) => (
-                  <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-200" : "bg-white"}`}>
-                    <div className="flex">
-                      <label className="block pe-2">{row.article}</label>
-                      <label className="block font-bold">{row.description}</label>
-                    </div>
-                    <div className="flex">
-                      <div className="pe-5">
-                        <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
-                        <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
-                        <label className="block pe-2">RRP: ${CurrencyFormatter.format(row.rrp)}</label>
+                {/* Display div with labels on smaller screens */}
+                <div className="md:hidden text-sm">
+                  {filteredData.map((row, index) => (
+                    <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-200" : "bg-white"}`}>
+                      <div className="flex">
+                        <label className="block pe-2">{row.article}</label>
+                        <label className="block font-bold">{row.description}</label>
                       </div>
-                      <div>
-                        <label className="block">Z-Status: {row.z_status}</label>
-                        <label className="block">SOH: {row.soh}</label>
-                        <label className="block">Age:</label>
+                      <div className="flex">
+                        <div className="pe-5">
+                          <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
+                          <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
+                          <label className="block pe-2">RRP: ${CurrencyFormatter.format(row.rrp)}</label>
+                        </div>
+                        <div>
+                          <label className="block">Z-Status: {row.z_status}</label>
+                          <label className="block">SOH: {row.soh}</label>
+                          <label className="block">Age:</label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 }

@@ -22,6 +22,14 @@ export default function StoreData() {
   const [storeTotals, setStoreTotals] = useState<any[]>([]); // Adjust the type accordingly
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchUniqueStores(); // Wait for fetchUniqueStores to complete
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
     const fetchUniqueStores = async () => {
       try {
         const { data: stores, error: storesError } = await supabase.from("unique_stores").select("store");
@@ -36,14 +44,19 @@ export default function StoreData() {
         } else {
           setUniqueStores(stores.map((store) => store.store));
           setUniqueDepartments(departments.map((department) => department.department));
+
+          // Now that uniqueStores is updated, call getStoreData
+          if (stores.length > 0) {
+            getStoreData(stores[0].store, "all");
+          }
         }
       } catch (error: any) {
         setError(error.message);
       }
     };
 
-    fetchUniqueStores();
-  }, []);
+    fetchData(); // Call the new function to fetch data
+  }, []); // Empty dependency array ensures that this runs only once on mount
 
   const getStoreData = async (selectedStore: string, selectedDepartment: string) => {
     try {

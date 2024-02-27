@@ -131,15 +131,15 @@ export default function StoreData() {
       {storeData && storeData.length > 0 && (
         <>
           <BarChart data={storeTotals} />
-          <div className="mt-5 px-40">
+          <div className="mt-5 px-40 sm:px-0">
             <p>{filteredData.length} clearance lines</p>
-            <table className="table table-zebra">
+            <table className="table table-zebra sm:table-sm">
               <thead>
                 <tr>
                   <th>Article</th>
                   <th>Description</th>
                   <th>MAP</th>
-
+                  <th>SOH@Cost</th>
                   <th>RRP</th>
                   <th>Z-Status</th>
                   <th>SOH</th>
@@ -151,6 +151,7 @@ export default function StoreData() {
                     <td>{row.article}</td>
                     <td>{row.description}</td>
                     <td>{CurrencyFormatter.format(row.map)}</td>
+                    <td>{CurrencyFormatter.format(row.cost)}</td>
                     <td>{CurrencyFormatter.format(row.rrp)}</td>
                     <td>{row.z_status}</td>
                     <td>{row.soh}</td>

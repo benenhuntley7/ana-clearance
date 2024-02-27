@@ -25,9 +25,9 @@ export default function Nav() {
                 <Link href="/import" className="mr-4">
                   Import
                 </Link>
-                <SignOutButton />
               </>
             )}
+            <SignOutButton />
           </SignedIn>
         </div>
       </nav>

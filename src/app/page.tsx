@@ -4,7 +4,7 @@ import { LoadingPage } from "./components/loadingSpinner";
 import StoreData from "./components/StoreData";
 
 export default async function Home() {
-  const { userId } = auth();
+  const { userId, sessionClaims } = auth();
 
   if (!userId) {
     redirect("/sign-in");
@@ -12,12 +12,25 @@ export default async function Home() {
 
   return (
     <>
-      <ClerkLoading>
-        <LoadingPage />
-      </ClerkLoading>
-      <ClerkLoaded>
-        <StoreData />
-      </ClerkLoaded>
+      {checkEmail(sessionClaims.email as string) ? (
+        <>
+          <ClerkLoading>
+            <LoadingPage />
+          </ClerkLoading>
+          <ClerkLoaded>
+            <StoreData />
+          </ClerkLoaded>
+        </>
+      ) : (
+        <>
+          <p className="text-center p-10">You are not authorised to view this content</p>
+        </>
+      )}
     </>
   );
 }
+
+const checkEmail = (email: string) => {
+  if (email === "benenhuntley@hotmail.com" || email.endsWith("@anaconda.com.au")) return true;
+  return false;
+};

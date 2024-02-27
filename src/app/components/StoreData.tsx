@@ -146,7 +146,7 @@ export default function StoreData() {
           <BarChart data={storeTotals} />
           <div className="mt-5 px-0 md:px-40">
             <p>{filteredData.length} clearance lines</p>
-            <table className="table-sm md:table table-zebra">
+            <table className="table table-xs md:table-md table-zebra">
               <thead>
                 <tr>
                   <th>Article</th>

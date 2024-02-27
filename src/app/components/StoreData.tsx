@@ -198,8 +198,9 @@ export default function StoreData() {
                         <label className="block pe-2">RRP: ${CurrencyFormatter.format(row.rrp)}</label>
                       </div>
                       <div>
-                        <label className="block pe-2">Z-Status: {row.z_status}</label>
-                        <label className="block pe-2">SOH: {row.soh}</label>
+                        <label className="block">Z-Status: {row.z_status}</label>
+                        <label className="block">SOH: {row.soh}</label>
+                        <label className="block">Age:</label>
                       </div>
                     </div>
                   </div>

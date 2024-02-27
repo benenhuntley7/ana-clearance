@@ -146,32 +146,34 @@ export default function StoreData() {
           <BarChart data={storeTotals} />
           <div className="mt-5 px-0 md:px-40">
             <p>{filteredData.length} clearance lines</p>
-            <table className="table table-xs md:table-md table-zebra">
-              <thead>
-                <tr>
-                  <th>Article</th>
-                  <th>Description</th>
-                  <th>MAP</th>
-                  <th>SOH@Cost</th>
-                  <th>RRP</th>
-                  <th>Z-Status</th>
-                  <th>SOH</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((row, index) => (
-                  <tr key={index}>
-                    <td>{row.article}</td>
-                    <td>{row.description}</td>
-                    <td>{CurrencyFormatter.format(row.map)}</td>
-                    <td>{CurrencyFormatter.format(row.cost)}</td>
-                    <td>{CurrencyFormatter.format(row.rrp)}</td>
-                    <td>{row.z_status}</td>
-                    <td>{row.soh}</td>
+            <div className="overflow-x-auto">
+              <table className="table table-xs md:table-md table-zebra">
+                <thead>
+                  <tr>
+                    <th>Article</th>
+                    <th>Description</th>
+                    <th>MAP</th>
+                    <th>SOH@Cost</th>
+                    <th>RRP</th>
+                    <th>Z-Status</th>
+                    <th>SOH</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredData.map((row, index) => (
+                    <tr key={index} className="block sm:table-row">
+                      <td className="mb-2 sm:table-cell">{row.article}</td>
+                      <td className="mb-2 sm:table-cell">{row.description}</td>
+                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.map)}</td>
+                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.cost)}</td>
+                      <td className="mb-2 sm:table-cell">{CurrencyFormatter.format(row.rrp)}</td>
+                      <td className="mb-2 sm:table-cell">{row.z_status}</td>
+                      <td className="mb-2 sm:table-cell">{row.soh}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

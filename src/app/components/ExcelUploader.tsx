@@ -26,8 +26,12 @@ const ExcelUploader = () => {
 
         // Remove text and convert to numeric for each cell at position 8
         data = data.map((row) => {
-          // Parse numeric part of the string in row[8]
-          const numericValue = parseFloat(row[8]);
+          // Remove commas from the string in row[8]
+          const stringWithoutCommas = row[8].replace(/,/g, "");
+
+          // Parse numeric part of the string without commas
+          const numericValue = parseFloat(stringWithoutCommas);
+
           // Update row[8] with the numeric value
           row[8] = isNaN(numericValue) ? null : numericValue;
           return row;

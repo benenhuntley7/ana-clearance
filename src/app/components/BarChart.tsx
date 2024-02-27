@@ -8,8 +8,6 @@ interface BarChartProps {
 }
 
 export const BarChart = ({ data }: BarChartProps) => {
-  console.log(data);
-
   // Extract unique labels from the data array
   const uniqueLabels = data.map((item) => item.department);
 

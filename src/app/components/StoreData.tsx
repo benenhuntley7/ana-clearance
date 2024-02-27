@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { BarChart } from "./BarChart";
 
@@ -14,11 +14,11 @@ if (!supabaseKey || !supabaseUrl) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function StoreData() {
-  const ref = useRef<HTMLFormElement>(null);
   const [uniqueStores, setUniqueStores] = useState<string[]>([]);
   const [uniqueDepartments, setUniqueDepartments] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [storeData, setStoreData] = useState<any[]>([]); // Adjust the type accordingly
+  const [filteredData, setFilteredData] = useState<any[]>([]); // Adjust the type accordingly
   const [storeTotals, setStoreTotals] = useState<any[]>([]); // Adjust the type accordingly
 
   useEffect(() => {
@@ -45,13 +45,17 @@ export default function StoreData() {
     fetchUniqueStores();
   }, []);
 
-  const getStoreData = async (selectedStore: string) => {
+  const getStoreData = async (selectedStore: string, selectedDepartment: string) => {
     try {
       const { data, error } = await supabase.from("stock").select().eq("store", selectedStore);
       if (error) {
         console.error(error);
       } else {
+        // Filter data based on selected department
+        const filteredData =
+          selectedDepartment === "all" ? data : data.filter((row) => row.department === selectedDepartment);
         setStoreData(data);
+        setFilteredData(filteredData);
       }
     } catch (error) {
       console.error(error);
@@ -66,32 +70,36 @@ export default function StoreData() {
         console.error(error);
       } else {
         setStoreTotals(data);
-        console.log(data); // Use 'data' instead of 'storeTotals'
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (error) {
-    console.error(error);
-    return null;
-  }
+  const getDepartmentData = async (selectedDepartment: string, selectedStore: string) => {
+    // Filter data based on selected store and department
+    const filteredData = selectedStore === "all" ? storeData : storeData.filter((row) => row.store === selectedStore);
 
-  const getDepartmentData = async (selectedDepartment: string) => {
-    return;
+    setFilteredData(
+      selectedDepartment === "all" ? filteredData : filteredData.filter((row) => row.department === selectedDepartment)
+    );
   };
 
   return (
     <>
-      <form className="mb-4 w-52 flex gap-x-2 items-center" ref={ref}>
+      <form className="mb-4 w-52 flex gap-x-2 items-center">
         <div className="flex justify-between p-6">
           <label className="form-control w-full max-w-xs">
-            <select className="select select-bordered" onChange={(e) => getStoreData(e.target.value)}>
+            <select
+              id="storeSelect"
+              className="select select-bordered"
+              onChange={(e) =>
+                getStoreData(e.target.value, (document.getElementById("departmentSelect") as HTMLSelectElement)?.value)
+              }
+            >
               <option disabled defaultValue="">
                 Choose Store
               </option>
-              <option value="all">All Stores</option>
               {uniqueStores.map((store) => (
                 <option key={store} value={store}>
                   {store}
@@ -100,7 +108,13 @@ export default function StoreData() {
             </select>
           </label>
           <label className="form-control w-full max-w-xs">
-            <select className="select select-bordered mx-5" onChange={(e) => getDepartmentData(e.target.value)}>
+            <select
+              id="departmentSelect"
+              className="select select-bordered mx-5"
+              onChange={(e) =>
+                getDepartmentData(e.target.value, (document.getElementById("storeSelect") as HTMLSelectElement)?.value)
+              }
+            >
               <option disabled defaultValue="">
                 Choose Department
               </option>
@@ -114,7 +128,44 @@ export default function StoreData() {
           </label>
         </div>
       </form>
-      {storeData && storeData.length > 0 && <BarChart data={storeTotals} />}
+      {storeData && storeData.length > 0 && (
+        <>
+          <BarChart data={storeTotals} />
+          <div className="mt-5 px-40">
+            <p>{filteredData.length} clearance lines</p>
+            <table className="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Article</th>
+                  <th>Description</th>
+                  <th>MAP</th>
+
+                  <th>RRP</th>
+                  <th>Z-Status</th>
+                  <th>SOH</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((row, index) => (
+                  <tr key={index}>
+                    <td>{row.article}</td>
+                    <td>{row.description}</td>
+                    <td>{CurrencyFormatter.format(row.map)}</td>
+                    <td>{CurrencyFormatter.format(row.rrp)}</td>
+                    <td>{row.z_status}</td>
+                    <td>{row.soh}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </>
   );
 }
+
+const CurrencyFormatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});

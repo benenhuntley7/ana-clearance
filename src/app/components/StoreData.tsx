@@ -178,12 +178,12 @@ export default function StoreData() {
               {/* Display div with labels on smaller screens */}
               <div className="md:hidden">
                 {filteredData.map((row, index) => (
-                  <div key={index} className="mb-4 flex flex-col">
+                  <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-slate-300" : "bg-slate-50"}`}>
                     <div className="flex">
                       <label className="block pe-2">{row.article}</label>
                       <label className="block font-bold">{row.description}</label>
                     </div>
-                    <div className="flex bg-slate-300">
+                    <div className="flex">
                       <div className="pe-5">
                         <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
                         <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>

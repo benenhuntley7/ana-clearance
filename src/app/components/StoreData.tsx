@@ -145,44 +145,54 @@ export default function StoreData() {
         <>
           <BarChart data={storeTotals} />
           <div className="mt-5 px-0 md:px-40">
-            <p>{filteredData.length} clearance lines</p>
+            <p className="p-2">{filteredData.length} clearance lines</p>
             <div className="overflow-x-auto">
-              <table className="table table-xs md:table-md table-zebra">
+              {/* Display table on medium or larger screens */}
+              <table className="hidden md:table">
                 <thead>
                   <tr>
                     <th>Article</th>
                     <th>Description</th>
-                    <th className="hidden sm:table-cell">MAP</th>
-                    <th className="hidden sm:table-cell">SOH@Cost</th>
-                    <th className="hidden sm:table-cell">RRP</th>
-                    <th className="hidden sm:table-cell">Z-Status</th>
-                    <th className="hidden sm:table-cell">SOH</th>
+                    <th>MAP</th>
+                    <th>SOH@Cost</th>
+                    <th>RRP</th>
+                    <th>Z-Status</th>
+                    <th>SOH</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredData.map((row, index) => (
-                    <React.Fragment key={index}>
-                      <tr className="block sm:flex sm:flex-wrap">
-                        <td className="mb-2 sm:w-full">{row.article}</td>
-                        <td className="mb-2 sm:w-full">{row.description}</td>
-                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.map)}</td>
-                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.cost)}</td>
-                        <td className="hidden sm:table-cell">{CurrencyFormatter.format(row.rrp)}</td>
-                        <td className="hidden sm:table-cell">{row.z_status}</td>
-                        <td className="hidden sm:table-cell">{row.soh}</td>
-                      </tr>
-                      <tr className="hidden sm:flex">
-                        <td colSpan={2}></td>
-                        <td>{CurrencyFormatter.format(row.map)}</td>
-                        <td>{CurrencyFormatter.format(row.cost)}</td>
-                        <td>{CurrencyFormatter.format(row.rrp)}</td>
-                        <td>{row.z_status}</td>
-                        <td>{row.soh}</td>
-                      </tr>
-                    </React.Fragment>
+                    <tr key={index}>
+                      <td>{row.article}</td>
+                      <td>{row.description}</td>
+                      <td>{CurrencyFormatter.format(row.map)}</td>
+                      <td>{CurrencyFormatter.format(row.cost)}</td>
+                      <td>{CurrencyFormatter.format(row.rrp)}</td>
+                      <td>{row.z_status}</td>
+                      <td>{row.soh}</td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
+
+              {/* Display div with labels on smaller screens */}
+              <div className="md:hidden">
+                {filteredData.map((row, index) => (
+                  <div key={index} className="mb-4 flex flex-col">
+                    <div className="flex">
+                      <label className="block pe-2">{row.article}</label>
+                      <label className="block font-bold">{row.description}</label>
+                    </div>
+                    <div className="flex">
+                      <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
+                      <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
+                      <label className="block pe-2">RRP: {CurrencyFormatter.format(row.rrp)}</label>
+                      <label className="block pe-2">Z-Status: {row.z_status}</label>
+                      <label className="block pe-2">SOH: {row.soh}</label>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </>

@@ -101,7 +101,7 @@ export default function StoreData() {
   return (
     <>
       <div
-        style={{ maxHeight: "calc(100vh - 70px)", maxWidth: "calc(100vw - 5px)" }}
+        style={{ maxHeight: "calc(100vh - 70px)", maxWidth: "calc(100vw - 20px)" }}
         className="overflow-y-auto mx-auto w-full"
       >
         <div className="mb-4 flex gap-x-2 justify-center items-center">

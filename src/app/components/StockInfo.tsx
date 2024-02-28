@@ -34,40 +34,23 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
   return (
     <>
       <div className="flex justify-center mt-4">
-        <div className="md:hidden">
-          <form className="flex">
-            <button className="btn btn-sm btn-outline me-4" onClick={sortByCost}>
-              Sort By SOH@Cost
-            </button>
-            <button className="btn btn-sm btn-outline me-4" onClick={sortByAge}>
-              Sort By Age
-            </button>
-            <button className="btn btn-sm btn-outline" onClick={sortBySOH}>
-              Sort By SOH
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="flex justify-center mt-4">
-        <div className="hidden md:block">
-          <form className="flex">
-            <button className="btn btn-outline me-4" onClick={sortByCost}>
-              Sort By SOH@Cost
-            </button>
-            <button className="btn btn-outline me-4" onClick={sortByAge}>
-              Sort By Age
-            </button>
-            <button className="btn btn-outline" onClick={sortBySOH}>
-              Sort By SOH
-            </button>
-          </form>
-        </div>
+        <form className="flex">
+          <button className="btn btn-sm md:btn-md btn-outline me-4" onClick={sortByCost}>
+            Sort By SOH@Cost
+          </button>
+          <button className="btn btn-sm md:btn-md btn-outline me-4" onClick={sortByAge}>
+            Sort By Age
+          </button>
+          <button className="btn btn-sm md:btn-md btn-outline" onClick={sortBySOH}>
+            Sort By SOH
+          </button>
+        </form>
       </div>
       <div className="mt-5 px-2 md:px-40">
         <p className="p-2">{storeData.length} clearance lines</p>
         <div className="overflow-x-auto">
           {/* Display table on medium or larger screens */}
-          <table className="hidden md:table table-zebra-zebra">
+          <table className="hidden md:table table-zebra-zebra px-1">
             <thead>
               <tr>
                 <th>Article</th>

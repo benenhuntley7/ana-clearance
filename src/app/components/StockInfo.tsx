@@ -86,7 +86,9 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                     <td>{row.article}</td>
                   </tr>
                   <tr>
-                    <td className="font-bold">{row.description}</td>
+                    <td className="font-bold" colSpan={4}>
+                      {row.description}
+                    </td>
                   </tr>
                   <tr>
                     <td>MAP:</td>

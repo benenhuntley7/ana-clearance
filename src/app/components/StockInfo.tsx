@@ -50,7 +50,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
         <p className="p-2">{storeData.length} clearance lines</p>
         <div className="overflow-x-auto">
           {/* Display table on medium or larger screens */}
-          <table className="hidden md:table table-zebra-zebra px-1">
+          <table className="hidden md:table table-zebra-zebra">
             <thead>
               <tr>
                 <th>Article</th>
@@ -78,25 +78,35 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
           </table>
 
           {/* Display div with labels on smaller screens */}
-          <div className="md:hidden text-sm">
+          <div className="md:hidden text-sm px-2">
             {storeData.map((row, index) => (
               <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}>
-                <div className="flex">
-                  <label className="block pe-2">{row.article}</label>
-                  <label className="block font-bold">{row.description}</label>
-                </div>
-                <div className="flex">
-                  <div className="pe-5">
-                    <label className="block pe-2">MAP: {CurrencyFormatter.format(row.map)}</label>
-                    <label className="block pe-2">SOH@Cost: {CurrencyFormatter.format(row.cost)}</label>
-                    <label className="block pe-2">RRP: ${CurrencyFormatter.format(row.rrp)}</label>
-                  </div>
-                  <div>
-                    <label className="block">Z-Status: {row.z_status}</label>
-                    <label className="block">SOH: {row.soh}</label>
-                    <label className="block">Age:</label>
-                  </div>
-                </div>
+                <table>
+                  <tr>
+                    <td>{row.article}</td>
+                  </tr>
+                  <tr>
+                    <td className="font-bold">{row.description}</td>
+                  </tr>
+                  <tr>
+                    <td>MAP:</td>
+                    <td>{CurrencyFormatter.format(row.map)}</td>
+                    <td>Z-Status:</td>
+                    <td>{row.z_status}</td>
+                  </tr>
+                  <tr>
+                    <td>SOH@Cost:</td>
+                    <td>{CurrencyFormatter.format(row.cost)}</td>
+                    <td>SOH:</td>
+                    <td>{row.soh}</td>
+                  </tr>
+                  <tr>
+                    <td>RRP:</td>
+                    <td>{row.rrp}</td>
+                    <td>AGE:</td>
+                    <td></td>
+                  </tr>
+                </table>
               </div>
             ))}
           </div>

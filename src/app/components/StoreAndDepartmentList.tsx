@@ -27,6 +27,7 @@ interface StoreData {
   sub_department: string;
   cost: number;
   map: number;
+  age: number;
 }
 
 export const StoreAndDepartmentList = ({

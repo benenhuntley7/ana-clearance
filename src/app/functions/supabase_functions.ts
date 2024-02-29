@@ -11,7 +11,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const getStoreData = async (store: string) => {
   try {
-    const { data, error } = await supabase.from("stock").select().eq("store", store);
+    const { data, error } = await supabase.from("stock_with_age").select().eq("store", store);
     if (error) {
       console.error(error);
       return [];

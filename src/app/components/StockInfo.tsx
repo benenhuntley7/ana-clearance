@@ -60,6 +60,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                 <th>RRP</th>
                 <th>Z-Status</th>
                 <th>SOH</th>
+                <th>Age</th>
               </tr>
             </thead>
             <tbody>
@@ -72,6 +73,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                   <td>{CurrencyFormatter.format(row.rrp)}</td>
                   <td>{row.z_status}</td>
                   <td>{row.soh}</td>
+                  <td>{row.age} days</td>
                 </tr>
               ))}
             </tbody>
@@ -106,7 +108,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                     <td>RRP:</td>
                     <td>${row.rrp}</td>
                     <td>Age:</td>
-                    <td></td>
+                    <td>{row.age} days</td>
                   </tr>
                 </table>
               </div>

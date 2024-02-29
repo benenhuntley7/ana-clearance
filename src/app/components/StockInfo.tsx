@@ -78,9 +78,9 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
           </table>
 
           {/* Display div with labels on smaller screens */}
-          <div className="md:hidden text-sm px-2">
+          <div className="md:hidden text-sm">
             {storeData.map((row, index) => (
-              <div key={index} className={`mb-4 flex flex-col ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}>
+              <div key={index} className={`mb-4 flex flex-col px-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}>
                 <table>
                   <tr>
                     <td>{row.article}</td>
@@ -91,21 +91,21 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                     </td>
                   </tr>
                   <tr>
-                    <td>MAP:</td>
-                    <td>{CurrencyFormatter.format(row.map)}</td>
-                    <td>Z-Status:</td>
+                    <td style={{ width: "15%" }}>MAP:</td>
+                    <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
+                    <td style={{ width: "15%" }}>Status:</td>
                     <td>{row.z_status}</td>
                   </tr>
                   <tr>
                     <td>SOH@Cost:</td>
-                    <td>{CurrencyFormatter.format(row.cost)}</td>
+                    <td>${CurrencyFormatter.format(row.cost)}</td>
                     <td>SOH:</td>
                     <td>{row.soh}</td>
                   </tr>
                   <tr>
                     <td>RRP:</td>
-                    <td>{row.rrp}</td>
-                    <td>AGE:</td>
+                    <td>${row.rrp}</td>
+                    <td>Age:</td>
                     <td></td>
                   </tr>
                 </table>

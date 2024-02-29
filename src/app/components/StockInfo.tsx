@@ -38,7 +38,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
           <button className="btn btn-sm md:btn-md btn-outline me-4" onClick={sortByCost}>
             Sort By SOH@Cost
           </button>
-          <button className="btn btn-sm md:btn-md btn-outline me-4" onClick={sortByAge}>
+          <button className="btn btn-sm md:btn-md btn-outline me-4 hidden" onClick={sortByAge}>
             Sort By Age
           </button>
           <button className="btn btn-sm md:btn-md btn-outline" onClick={sortBySOH}>

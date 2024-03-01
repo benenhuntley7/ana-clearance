@@ -88,7 +88,7 @@ export const StoreAndDepartmentList = ({
               <option disabled defaultValue="">
                 Choose Department
               </option>
-              <option>All Departments</option>
+              <option value="all">All Departments</option>
               {departmentList.map((department) => (
                 <option key={department} value={department}>
                   {department}

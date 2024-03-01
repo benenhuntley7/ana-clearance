@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly
@@ -7,6 +7,8 @@ interface StoreDataProps {
 }
 
 export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: StoreDataProps) => {
+  const [sortedBy, setSortedBy] = useState("");
+
   const sortByCost = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -14,6 +16,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     sortedData.sort((a, b) => {
       return b.cost - a.cost;
     });
+    setSortedBy("cost");
     setStoreData(sortedData);
   };
 
@@ -24,24 +27,50 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     sortedData.sort((a, b) => {
       return b.soh - a.soh;
     });
+    setSortedBy("soh");
     setStoreData(sortedData);
   };
 
   const sortByAge = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    const sortedData = [...storeData];
+    sortedData.sort((a, b) => {
+      // First, sort by age in descending order
+      if (b.age !== a.age) {
+        return b.age - a.age;
+      }
+
+      // If age is the same, then sort by either cost or SOH based on sortedBy
+      if (sortedBy === "cost") {
+        return b.cost - a.cost;
+      } else if (sortedBy === "soh") {
+        return b.soh - a.soh;
+      }
+
+      return 0; // Default case, no change in order
+    });
+
+    setStoreData(sortedData);
   };
 
   return (
     <>
       <div className="flex justify-center mt-4">
         <form className="flex">
-          <button className="btn btn-sm md:btn-md btn-outline me-4" onClick={sortByCost}>
+          <button
+            className={`btn btn-sm md:btn-md btn-outline me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
+            onClick={sortByCost}
+          >
             Sort By SOH@Cost
           </button>
-          <button className="btn btn-sm md:btn-md btn-outline me-4 hidden" onClick={sortByAge}>
+          <button className="btn btn-sm md:btn-md btn-outline me-4 " onClick={sortByAge}>
             Sort By Age
           </button>
-          <button className="btn btn-sm md:btn-md btn-outline" onClick={sortBySOH}>
+          <button
+            className={`btn btn-sm md:btn-md btn-outline me-4 ${sortedBy === "soh" ? "btn-active" : null}`}
+            onClick={sortBySOH}
+          >
             Sort By SOH
           </button>
         </form>

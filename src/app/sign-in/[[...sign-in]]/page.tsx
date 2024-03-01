@@ -9,9 +9,7 @@ export default function Page() {
       </ClerkLoading>
       <ClerkLoaded>
         <div className="flex justify-center">
-          <div className="flex justify-center p-1">
-            <SignIn />
-          </div>
+          <SignIn />
         </div>
       </ClerkLoaded>
     </>

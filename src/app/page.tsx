@@ -31,6 +31,6 @@ export default async function Home() {
 }
 
 const checkEmail = (email: string) => {
-  if (email === "angelachilman@gmail.com" || email.endsWith("@anaconda.com.au")) return true;
+  if (email.endsWith("@anaconda.com.au")) return true;
   return false;
 };

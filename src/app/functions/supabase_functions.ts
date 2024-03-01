@@ -38,3 +38,23 @@ export const getStoreTotals = async (store: string) => {
     return [];
   }
 };
+
+export const setPriced = async (id: number, isChecked: boolean) => {
+  try {
+    const { error } = await supabase
+      .from("stock")
+      .update({ priced: isChecked }) // Set "priced" column to the value of isChecked
+      .eq("id", id);
+
+    if (error) {
+      // Handle the error appropriately (e.g., logging, displaying a message)
+      console.error("Error updating 'priced' field:", error);
+    } else {
+      // Data has been successfully updated
+      //console.log("Successfully updated 'priced' field:", data);
+    }
+  } catch (error) {
+    // Handle exceptions during the asynchronous operation
+    console.error("An unexpected error occurred:", error);
+  }
+};

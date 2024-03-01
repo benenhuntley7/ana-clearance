@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { setPriced } from "../functions/supabase_functions";
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly
@@ -54,6 +55,15 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     setStoreData(sortedData);
   };
 
+  const handleCheckboxChange = (index: number, row: any) => {
+    const updatedData = [...storeData];
+    updatedData[index].priced = !row.priced; // Toggle 'priced' property
+    setStoreData(updatedData);
+
+    // Call setPriced with the updated 'priced' value
+    setPriced(row.id, updatedData[index].priced);
+  };
+
   return (
     <>
       <div className="flex justify-center mt-4">
@@ -90,6 +100,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                 <th>Z-Status</th>
                 <th>SOH</th>
                 <th>Age</th>
+                <th>Priced</th>
               </tr>
             </thead>
             <tbody>
@@ -103,42 +114,65 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                   <td>{row.z_status}</td>
                   <td>{row.soh}</td>
                   <td>{row.age} days</td>
+                  <td>
+                    <label className="label cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="toggle toggle-success"
+                        checked={row.priced} // Use a property to determine the initial checked state
+                        onChange={() => handleCheckboxChange(index, row)}
+                      />
+                    </label>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
           {/* Display div with labels on smaller screens */}
-          <div className="md:hidden text-sm">
+          <div className="md:hidden text-sm min-w-full">
             {storeData.map((row, index) => (
               <div key={index} className={`mb-4 flex flex-col px-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}>
                 <table>
-                  <tr>
-                    <td>{row.article}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold" colSpan={4}>
-                      {row.description}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: "15%" }}>MAP:</td>
-                    <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
-                    <td style={{ width: "15%" }}>Status:</td>
-                    <td>{row.z_status}</td>
-                  </tr>
-                  <tr>
-                    <td>SOH@Cost:</td>
-                    <td>${CurrencyFormatter.format(row.cost)}</td>
-                    <td>SOH:</td>
-                    <td>{row.soh}</td>
-                  </tr>
-                  <tr>
-                    <td>RRP:</td>
-                    <td>${row.rrp}</td>
-                    <td>Age:</td>
-                    <td>{row.age} days</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>{row.article}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-bold" colSpan={5}>
+                        {row.description}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={{ width: "15%" }}>MAP:</td>
+                      <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
+                      <td style={{ width: "15%" }}>Status:</td>
+                      <td>{row.z_status}</td>
+                      <td>Priced</td>
+                    </tr>
+                    <tr>
+                      <td>SOH@Cost:</td>
+                      <td>${CurrencyFormatter.format(row.cost)}</td>
+                      <td style={{ width: "20%" }}>SOH:</td>
+                      <td>{row.soh}</td>
+                      <td>
+                        <label className="label cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="toggle"
+                            checked={row.priced} // Use a property to determine the initial checked state
+                            onChange={() => handleCheckboxChange(index, row)}
+                          />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>RRP:</td>
+                      <td>${row.rrp}</td>
+                      <td>Age:</td>
+                      <td>{row.age} days</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             ))}

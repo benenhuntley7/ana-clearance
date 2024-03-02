@@ -26,7 +26,7 @@ export const getStoreData = async (store: string) => {
 
 export const getStoreTotals = async (store: string) => {
   try {
-    const { data, error } = await supabase.from("store_department_weekly_total_cost").select().eq("store", store);
+    const { data, error } = await supabase.from("store_department_total_cost").select().eq("store", store);
     if (error) {
       console.error(error);
       return [];

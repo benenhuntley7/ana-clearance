@@ -5,6 +5,7 @@ import { BarChart } from "./BarChart";
 import { StoreAndDepartmentList } from "./StoreAndDepartmentList";
 import { StockInfo } from "./StockInfo";
 import { getDepartmentList, getStoreData, getStoreList, getStoreTotals } from "../functions/supabase_functions";
+import { LoadingPage } from "./loadingSpinner";
 
 export default function StoreData() {
   const [storeData, setStoreData] = useState<string[]>([]);
@@ -53,8 +54,14 @@ export default function StoreData() {
         setSelectedDepartment={setSelectedDepartment}
         setFilteredData={setFilteredData}
       />
-      <BarChart data={storeTotals} />
-      <StockInfo storeData={filteredData} setStoreData={setFilteredData} selectedDepartment={selectedDepartment} />
+      {storeData.length > 0 ? (
+        <>
+          <BarChart data={storeTotals} />
+          <StockInfo storeData={filteredData} setStoreData={setFilteredData} selectedDepartment={selectedDepartment} />
+        </>
+      ) : (
+        <LoadingPage />
+      )}
     </>
   );
 }

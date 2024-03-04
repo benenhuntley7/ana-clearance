@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect } from "react";
 import { getStoreData, getStoreTotals } from "../functions/supabase_functions";
 import { StoreDataInterface } from "../types/types";
+import { LoadingPage } from "./loadingSpinner";
 
 interface StoreAndDepartmentListProps {
   storeList: any[]; // Adjust the type accordingly
@@ -53,33 +54,39 @@ export const StoreAndDepartmentList = ({
   return (
     <>
       <div className="flex w-full justify-center p-4">
-        <form className="flex">
-          <label className="form-control w-full max-w-xs pe-4">
-            <select id="storeSelect" className="select select-bordered" onChange={handleStoreSelectChange}>
-              <option disabled defaultValue="">
-                Choose Store
-              </option>
-              {storeList.map((store) => (
-                <option key={store} value={store}>
-                  {store}
+        {storeList.length > 0 && departmentList.length > 0 ? (
+          <form className="flex">
+            <label className="form-control w-full max-w-xs pe-4">
+              <select id="storeSelect" className="select select-bordered" onChange={handleStoreSelectChange}>
+                <option disabled defaultValue="">
+                  Choose Store
                 </option>
-              ))}
-            </select>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <select id="storeSelect" className="select select-bordered" onChange={handleDepartmentSelectChange}>
-              <option disabled defaultValue="">
-                Choose Department
-              </option>
-              <option value="all">All Departments</option>
-              {departmentList.map((department) => (
-                <option key={department} value={department}>
-                  {department}
+                {storeList.map((store) => (
+                  <option key={store} value={store}>
+                    {store}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <select id="storeSelect" className="select select-bordered" onChange={handleDepartmentSelectChange}>
+                <option disabled defaultValue="">
+                  Choose Department
                 </option>
-              ))}
-            </select>
-          </label>
-        </form>
+                <option value="all">All Departments</option>
+                {departmentList.map((department) => (
+                  <option key={department} value={department}>
+                    {department}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </form>
+        ) : (
+          <>
+            <LoadingPage />
+          </>
+        )}
       </div>
     </>
   );

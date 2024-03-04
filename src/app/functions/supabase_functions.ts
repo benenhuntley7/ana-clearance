@@ -31,7 +31,9 @@ export const getStoreTotals = async (store: string) => {
       console.error(error);
       return [];
     } else {
-      return data;
+      // Sort the totals array by the "department" property in ascending order
+      const sortedTotals = data.slice().sort((a, b) => a.department.localeCompare(b.department));
+      return sortedTotals;
     }
   } catch (error) {
     console.error(error);
@@ -68,7 +70,8 @@ export const getDepartmentList = async () => {
     } else {
       // Extract "store" values from the result
       const departments = data ? data.map((item) => item.department) : [];
-      return departments;
+      const sortedDepartments = departments.slice().sort((a, b) => a.localeCompare(b));
+      return sortedDepartments;
     }
   } catch (err) {
     console.error(err);

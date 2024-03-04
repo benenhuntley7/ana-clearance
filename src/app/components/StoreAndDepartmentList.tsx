@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { getStoreData, getStoreTotals } from "../functions/supabase_functions";
+import { StoreDataInterface } from "../types/types";
 
 interface StoreAndDepartmentListProps {
   storeList: any[]; // Adjust the type accordingly
@@ -10,24 +11,6 @@ interface StoreAndDepartmentListProps {
   setStoreTotals: any;
   setSelectedDepartment: any;
   setFilteredData: any;
-}
-
-interface StoreData {
-  id: number;
-  created_at: string;
-  store: string;
-  article: number;
-  description: string;
-  z_status: string;
-  rrp: number;
-  soh: number;
-  week: number;
-  year: number;
-  department: string;
-  sub_department: string;
-  cost: number;
-  map: number;
-  age: number;
 }
 
 export const StoreAndDepartmentList = ({
@@ -60,7 +43,7 @@ export const StoreAndDepartmentList = ({
       setFilteredData(
         selectedDepartment === "all"
           ? filteredData
-          : filteredData.filter((row: StoreData) => row.department === selectedDepartment)
+          : filteredData.filter((row: StoreDataInterface) => row.department === selectedDepartment)
       );
     };
 

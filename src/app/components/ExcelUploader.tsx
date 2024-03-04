@@ -45,26 +45,7 @@ const ExcelUploader = () => {
     }
   };
 
-  function getCurrentFinancialWeekNumber(): string {
-    const today: Date = new Date();
-    const year: number = today.getFullYear();
-
-    // Set the start date of the financial year (July 1st of the previous year)
-    const financialYearStart: Date = new Date(year - 1, 6, 1); // Month is 0-indexed, so 6 is July
-
-    // Calculate the difference in days between today and the start of the financial year
-    const dayDifference: number = Math.floor((today.getTime() - financialYearStart.getTime()) / (24 * 60 * 60 * 1000));
-
-    // Calculate the current financial week number
-    const currentFinancialWeekNumber: number = Math.ceil((dayDifference + 1) / 7);
-
-    // Format the result as "YYYY.WW"
-    const result: string = `${year}.${currentFinancialWeekNumber}`;
-
-    return result;
-  }
-
-  function uploadData() {
+  async function uploadData() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -83,28 +64,36 @@ const ExcelUploader = () => {
       cost: row[14],
       rrp: row[8],
       soh: row[13],
-      week: getCurrentFinancialWeekNumber().split(".")[1],
-      year: getCurrentFinancialWeekNumber().split(".")[0],
       department: row[0],
       sub_department: row[1],
     }));
 
-    // Concatenate multiple columns for onConflict
-    const onConflictColumns = ["store", "article", "week", "year"].join(",");
+    try {
+      const updateTime = new Date().toISOString(); // to set the updated_at time in the database for every row to the same timestamp
+      const updateResponse = await supabase.from("stock").upsert(
+        dataToInsert.map((row) => ({
+          article: row.article,
+          store: row.store,
+          department: row.department,
+          z_status: row.z_status,
+          cost: row.cost,
+          rrp: row.rrp,
+          soh: row.soh,
+          description: row.description, // included description
+          sub_department: row.sub_department, // included sub_department
+          updated_at: updateTime, // use created_at as updated_at
+        })),
+        { onConflict: "article, store", count: "exact" }
+      );
+      console.log("Data updated successfully:", updateResponse);
 
-    // Upload data to Supabase
-    const uploadPromise = Promise.resolve(
-      supabase.from("stock").upsert(dataToInsert, { onConflict: onConflictColumns })
-    );
+      const cleanupResponse = await supabase.from("stock").delete().neq("updated_at", updateTime);
+      console.log("Data cleanup successfully:", cleanupResponse);
 
-    uploadPromise
-      .then((response) => {
-        console.log("Data uploaded successfully:", response);
-        setFileData([]);
-      })
-      .catch((error) => {
-        console.error("Error uploading data:", error);
-      });
+      setFileData([]);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (
@@ -123,15 +112,6 @@ const ExcelUploader = () => {
 
       {fileData.length > 0 && (
         <>
-          <label htmlFor="weekNumber" className="pe-4">
-            Select Week:
-          </label>
-          <input
-            className="input input-bordered"
-            id="weekNumber"
-            name="weekNumber"
-            defaultValue={getCurrentFinancialWeekNumber()}
-          />
           <button className="btn btn-outline ms-4" onClick={uploadData}>
             Submit
           </button>

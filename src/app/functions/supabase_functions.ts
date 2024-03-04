@@ -58,3 +58,37 @@ export const setPriced = async (id: number, isChecked: boolean) => {
     console.error("An unexpected error occurred:", error);
   }
 };
+
+export const getDepartmentList = async () => {
+  try {
+    const { data, error } = await supabase.from("unique_departments").select("department");
+    if (error) {
+      console.error(error);
+      return [];
+    } else {
+      // Extract "store" values from the result
+      const departments = data ? data.map((item) => item.department) : [];
+      return departments;
+    }
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+export const getStoreList = async () => {
+  try {
+    const { data, error } = await supabase.from("unique_stores").select("store");
+    if (error) {
+      console.error(error);
+      return [];
+    } else {
+      // Extract "store" values from the result
+      const stores = data ? data.map((item) => item.store) : [];
+      return stores;
+    }
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};

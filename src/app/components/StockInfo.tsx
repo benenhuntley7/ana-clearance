@@ -10,6 +10,7 @@ interface StoreDataProps {
 
 export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: StoreDataProps) => {
   const [sortedBy, setSortedBy] = useState("");
+  const [onlyZ5, setOnlyZ5] = useState(false);
 
   const sortByCost = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -88,13 +89,20 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
               </button>
               <label className="label cursor-pointer">
                 <span className="label-text mx-2">Z5:</span>
-                <input type="checkbox" className="checkbox" />
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  checked={onlyZ5}
+                  onClick={() => {
+                    setOnlyZ5(!onlyZ5);
+                  }}
+                />
               </label>
             </form>
           </div>
           <div className="mt-5 px-2 md:px-40">
             <div className="md:flex md:justify-between py-2">
-              <p>{storeData.length} clearance lines</p>
+              <p> {storeData.filter((row) => !onlyZ5 || row.z_status === "Z5").length} clearance lines</p>
               <p> Last updated: {new Date(storeData[0].updated_at).toLocaleString()}</p>
             </div>
             <div className="overflow-x-auto">
@@ -114,28 +122,30 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                   </tr>
                 </thead>
                 <tbody>
-                  {storeData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.article}</td>
-                      <td>{row.description}</td>
-                      <td>{CurrencyFormatter.format(row.map)}</td>
-                      <td>{CurrencyFormatter.format(row.cost)}</td>
-                      <td>{CurrencyFormatter.format(row.rrp)}</td>
-                      <td>{row.z_status}</td>
-                      <td>{row.soh}</td>
-                      <td>{row.age} days</td>
-                      <td>
-                        <label className="label cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="toggle"
-                            checked={row.priced} // Use a property to determine the initial checked state
-                            onChange={() => handleCheckboxChange(index, row)}
-                          />
-                        </label>
-                      </td>
-                    </tr>
-                  ))}
+                  {storeData
+                    .filter((row) => !onlyZ5 || row.z_status === "Z5")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.article}</td>
+                        <td>{row.description}</td>
+                        <td>{CurrencyFormatter.format(row.map)}</td>
+                        <td>{CurrencyFormatter.format(row.cost)}</td>
+                        <td>{CurrencyFormatter.format(row.rrp)}</td>
+                        <td>{row.z_status}</td>
+                        <td>{row.soh}</td>
+                        <td>{row.age} days</td>
+                        <td>
+                          <label className="label cursor-pointer">
+                            <input
+                              type="checkbox"
+                              className="toggle"
+                              checked={row.priced}
+                              onChange={() => handleCheckboxChange(index, row)}
+                            />
+                          </label>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
 

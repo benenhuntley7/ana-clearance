@@ -74,7 +74,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     <>
       {storeData.length > 0 ? (
         <>
-          <div className="flex justify-center mt-4 px-2">
+          <div className="flex justify-center m-4">
             <form className="flex">
               <button
                 className={`btn btn-sm md:btn-md btn-outline w-24 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
@@ -104,7 +104,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
               </label>
             </form>
           </div>
-          <div className="mt-5 px-2 md:px-40">
+          <div className="m-4 md:px-40">
             <div className="md:flex md:justify-between py-2">
               <p> {storeData.filter((row) => !onlyZ5 || row.z_status === "Z5").length} clearance lines</p>
               <p> Last updated: {new Date(storeData[0].updated_at).toLocaleString()}</p>

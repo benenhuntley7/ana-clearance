@@ -70,7 +70,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     <>
       {storeData.length > 0 ? (
         <>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 px-2">
             <form className="flex">
               <button
                 className={`btn btn-sm md:btn-md btn-outline w-24 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}

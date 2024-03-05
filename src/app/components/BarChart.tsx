@@ -38,7 +38,7 @@ export const BarChart = ({ data }: BarChartProps) => {
     },
   } as const;
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center px-2">
       <div style={{ width: "800px" }}>
         <p className="text-center my-2">Grand Total: ${grandTotal.toLocaleString()}</p>
         <Bar data={chartData} options={options} />

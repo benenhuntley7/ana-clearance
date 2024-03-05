@@ -165,7 +165,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                             <label className="label cursor-pointer">
                               <input
                                 type="checkbox"
-                                className="toggle"
+                                className="toggle toggle-sm"
                                 checked={row.priced} // Use a property to determine the initial checked state
                                 onChange={() => handleCheckboxChange(index, row)}
                               />

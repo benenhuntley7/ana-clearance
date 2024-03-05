@@ -72,20 +72,24 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
           <div className="flex justify-center mt-4">
             <form className="flex">
               <button
-                className={`btn btn-sm md:btn-md btn-outline w-32 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
+                className={`btn btn-sm md:btn-md btn-outline w-3/12 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
                 onClick={sortByCost}
               >
                 Sort By SOH@Cost
               </button>
-              <button className="btn btn-sm md:btn-md btn-outline w-32 me-4 " onClick={sortByAge}>
+              <button className="btn btn-sm md:btn-md btn-outline w-3/12 me-4 " onClick={sortByAge}>
                 Sort By Age
               </button>
               <button
-                className={`btn btn-sm md:btn-md btn-outline w-32 me-4 ${sortedBy === "soh" ? "btn-active" : null}`}
+                className={`btn btn-sm md:btn-md btn-outline w-3/12 me-4 ${sortedBy === "soh" ? "btn-active" : null}`}
                 onClick={sortBySOH}
               >
                 Sort By SOH
               </button>
+              <label className="label cursor-pointer">
+                <span className="label-text mx-2">Z5:</span>
+                <input type="checkbox" className="checkbox" />
+              </label>
             </form>
           </div>
           <div className="mt-5 px-2 md:px-40">

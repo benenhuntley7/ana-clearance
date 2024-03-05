@@ -57,13 +57,17 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     setStoreData(sortedData);
   };
 
-  const handleCheckboxChange = (index: number, row: any) => {
-    const updatedData = [...storeData];
-    updatedData[index].priced = !row.priced; // Toggle 'priced' property
-    setStoreData(updatedData);
+  const handleCheckboxChange = (id: number, row: any) => {
+    const dataIndex = storeData.findIndex((dataRow) => dataRow.id === id);
 
-    // Call setPriced with the updated 'priced' value
-    setPriced(row.id, updatedData[index].priced);
+    if (dataIndex !== -1) {
+      const updatedData = [...storeData];
+      updatedData[dataIndex].priced = !row.priced;
+      setStoreData(updatedData);
+
+      // Call setPriced with the updated 'priced' value
+      setPriced(id, updatedData[dataIndex].priced);
+    }
   };
 
   return (
@@ -124,8 +128,8 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                 <tbody>
                   {storeData
                     .filter((row) => !onlyZ5 || row.z_status === "Z5")
-                    .map((row, index) => (
-                      <tr key={index}>
+                    .map((row) => (
+                      <tr key={row.id}>
                         <td>{row.article}</td>
                         <td>{row.description}</td>
                         <td>{CurrencyFormatter.format(row.map)}</td>
@@ -140,7 +144,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                               type="checkbox"
                               className="toggle"
                               checked={row.priced}
-                              onChange={() => handleCheckboxChange(index, row)}
+                              onChange={() => handleCheckboxChange(row.id, row)}
                             />
                           </label>
                         </td>
@@ -155,7 +159,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                   .filter((row) => !onlyZ5 || row.z_status === "Z5")
                   .map((row, index) => (
                     <div
-                      key={index}
+                      key={row.id}
                       className={`mb-4 flex flex-col px-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
                     >
                       <table>
@@ -186,7 +190,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                                   type="checkbox"
                                   className="toggle toggle-sm"
                                   checked={row.priced} // Use a property to determine the initial checked state
-                                  onChange={() => handleCheckboxChange(index, row)}
+                                  onChange={() => handleCheckboxChange(row.id, row)}
                                 />
                               </label>
                             </td>

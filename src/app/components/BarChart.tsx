@@ -11,6 +11,9 @@ export const BarChart = ({ data }: BarChartProps) => {
   // Extract unique labels from the data array
   const uniqueLabels = data.map((item) => item.department);
 
+  // Calculate grand total
+  const grandTotal = data.reduce((total, item) => total + item.total_cost, 0);
+
   const chartData = {
     datasets: [
       {
@@ -37,6 +40,8 @@ export const BarChart = ({ data }: BarChartProps) => {
   return (
     <div className="flex justify-center">
       <div style={{ width: "800px" }}>
+        {" "}
+        <p className="text-center my-2">Grand Total: ${grandTotal.toLocaleString()}</p>
         <Bar data={chartData} options={options} />
       </div>
     </div>

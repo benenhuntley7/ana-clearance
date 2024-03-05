@@ -151,54 +151,56 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
 
               {/* Display div with labels on smaller screens */}
               <div className="md:hidden text-sm min-w-full">
-                {storeData.map((row, index) => (
-                  <div
-                    key={index}
-                    className={`mb-4 flex flex-col px-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
-                  >
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>{row.article}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-bold" colSpan={5}>
-                            {row.description}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ width: "15%" }}>MAP:</td>
-                          <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
-                          <td style={{ width: "15%" }}>Status:</td>
-                          <td>{row.z_status}</td>
-                          <td>Priced</td>
-                        </tr>
-                        <tr>
-                          <td>SOH@Cost:</td>
-                          <td>${CurrencyFormatter.format(row.cost)}</td>
-                          <td style={{ width: "20%" }}>SOH:</td>
-                          <td>{row.soh}</td>
-                          <td>
-                            <label className="label cursor-pointer">
-                              <input
-                                type="checkbox"
-                                className="toggle toggle-sm"
-                                checked={row.priced} // Use a property to determine the initial checked state
-                                onChange={() => handleCheckboxChange(index, row)}
-                              />
-                            </label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>RRP:</td>
-                          <td>${row.rrp}</td>
-                          <td>Age:</td>
-                          <td>{row.age} days</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                ))}
+                {storeData
+                  .filter((row) => !onlyZ5 || row.z_status === "Z5")
+                  .map((row, index) => (
+                    <div
+                      key={index}
+                      className={`mb-4 flex flex-col px-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
+                    >
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>{row.article}</td>
+                          </tr>
+                          <tr>
+                            <td className="font-bold" colSpan={5}>
+                              {row.description}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ width: "15%" }}>MAP:</td>
+                            <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
+                            <td style={{ width: "15%" }}>Status:</td>
+                            <td>{row.z_status}</td>
+                            <td>Priced</td>
+                          </tr>
+                          <tr>
+                            <td>SOH@Cost:</td>
+                            <td>${CurrencyFormatter.format(row.cost)}</td>
+                            <td style={{ width: "20%" }}>SOH:</td>
+                            <td>{row.soh}</td>
+                            <td>
+                              <label className="label cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  className="toggle toggle-sm"
+                                  checked={row.priced} // Use a property to determine the initial checked state
+                                  onChange={() => handleCheckboxChange(index, row)}
+                                />
+                              </label>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>RRP:</td>
+                            <td>${row.rrp}</td>
+                            <td>Age:</td>
+                            <td>{row.age} days</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

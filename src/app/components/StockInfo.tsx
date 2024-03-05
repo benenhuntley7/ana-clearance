@@ -89,7 +89,10 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
             </form>
           </div>
           <div className="mt-5 px-2 md:px-40">
-            <p className="p-2">{storeData.length} clearance lines</p>
+            <div className="flex justify-between py-2">
+              <p>{storeData.length} clearance lines</p>
+              <p> Last updated: {new Date(storeData[0].updated_at).toLocaleString()}</p>
+            </div>
             <div className="overflow-x-auto">
               {/* Display table on medium or larger screens */}
               <table className="hidden md:table table-zebra-zebra">

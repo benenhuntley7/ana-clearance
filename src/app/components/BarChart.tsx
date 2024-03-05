@@ -40,7 +40,6 @@ export const BarChart = ({ data }: BarChartProps) => {
   return (
     <div className="flex justify-center">
       <div style={{ width: "800px" }}>
-        {" "}
         <p className="text-center my-2">Grand Total: ${grandTotal.toLocaleString()}</p>
         <Bar data={chartData} options={options} />
       </div>

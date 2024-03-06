@@ -82,11 +82,7 @@ export const StoreAndDepartmentList = ({
               </select>
             </label>
           </form>
-        ) : (
-          <>
-            <LoadingPage />
-          </>
-        )}
+        ) : null}
       </div>
     </>
   );

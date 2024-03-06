@@ -25,6 +25,7 @@ export const StoreAndDepartmentList = ({
   setFilteredData,
 }: StoreAndDepartmentListProps) => {
   const handleStoreSelectChange = async (event: ChangeEvent<HTMLSelectElement>) => {
+    setStoreData([]);
     const selectedStore = event.target.value;
     const data = await getStoreData(selectedStore);
     const totals = await getStoreTotals(selectedStore);
@@ -34,7 +35,9 @@ export const StoreAndDepartmentList = ({
   };
 
   const handleDepartmentSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setFilteredData([]);
     const department = event.target.value;
+
     setSelectedDepartment(department);
   };
 

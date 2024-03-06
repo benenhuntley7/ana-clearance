@@ -88,7 +88,11 @@ export const getStoreList = async () => {
     } else {
       // Extract "store" values from the result
       const stores = data ? data.map((item) => item.store) : [];
-      return stores;
+
+      // Sort the stores alphabetically
+      const sortedStores = stores.sort((a, b) => a.localeCompare(b));
+
+      return sortedStores;
     }
   } catch (err) {
     console.error(err);

@@ -59,9 +59,7 @@ export default function StoreData() {
           <BarChart data={storeTotals} />
           <StockInfo storeData={filteredData} setStoreData={setFilteredData} selectedDepartment={selectedDepartment} />
         </>
-      ) : (
-        <LoadingPage />
-      )}
+      ) : null}
     </>
   );
 }

@@ -57,21 +57,24 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
     setStoreData(sortedData);
   };
 
+  // Checkbox for when items are priced in store
   const handleCheckboxChange = (id: number, row: any) => {
     const dataIndex = storeData.findIndex((dataRow) => dataRow.id === id);
 
+    // If the row has an index then update state and set value in database
     if (dataIndex !== -1) {
       const updatedData = [...storeData];
       updatedData[dataIndex].priced = !row.priced;
       setStoreData(updatedData);
 
-      // Call setPriced with the updated 'priced' value
+      // Call setPriced with the updated 'priced' value, either true or false to supabase
       setPriced(id, updatedData[dataIndex].priced);
     }
   };
 
   return (
     <>
+      {/* Buttons for sorting data */}
       {storeData.length > 0 ? (
         <>
           <div className="flex justify-center m-4">
@@ -216,6 +219,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
   );
 };
 
+// Function to format to 2 decimal places for currency display
 const CurrencyFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,

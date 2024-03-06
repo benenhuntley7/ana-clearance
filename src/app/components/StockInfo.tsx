@@ -212,9 +212,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
             </div>
           </div>
         </>
-      ) : (
-        <LoadingPage />
-      )}
+      ) : null}
     </>
   );
 };

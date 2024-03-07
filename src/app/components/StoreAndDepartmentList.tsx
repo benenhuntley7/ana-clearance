@@ -110,7 +110,7 @@ export const StoreAndDepartmentList = ({
               <span className="me-2 md:text-base hidden md:block">History:</span>
               <input
                 type="checkbox"
-                className="toggle toggle-xs md:toggle-md"
+                className="toggle toggle-sm md:toggle-md"
                 checked={storeHistoryChart}
                 onChange={() => handleCheckboxChange()}
               />

@@ -21,7 +21,7 @@ export const Pagination = ({ storeData, currentPage, setCurrentPage, ITEMS_PER_P
 
   return (
     <div className="flex  my-4">
-      Page:
+      <p>Page:</p>
       {/*       <button
         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         disabled={currentPage === 1}

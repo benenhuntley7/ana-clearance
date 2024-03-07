@@ -4,10 +4,9 @@ import { setPriced } from "../functions/supabase_functions";
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly
   setStoreData: any;
-  selectedDepartment: string;
 }
 
-export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: StoreDataProps) => {
+export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
   const [sortedBy, setSortedBy] = useState("");
   const [onlyZ5, setOnlyZ5] = useState(false);
 
@@ -131,6 +130,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
                 <tbody>
                   {storeData
                     .filter((row) => !onlyZ5 || row.z_status === "Z5")
+                    .slice(0, 500)
                     .map((row) => (
                       <tr key={row.id}>
                         <td>{row.article}</td>
@@ -160,6 +160,7 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
               <div className="md:hidden text-sm min-w-full">
                 {storeData
                   .filter((row) => !onlyZ5 || row.z_status === "Z5")
+                  .slice(0, 500)
                   .map((row, index) => (
                     <div
                       key={row.id}

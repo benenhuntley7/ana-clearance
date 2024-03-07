@@ -99,10 +99,10 @@ export const StoreAndDepartmentList = ({
               </select>
             </label>
             <label className="label cursor-pointer ms-2">
-              <span className="me-2 text-sm md:text-base">History:</span>
+              <span className="me-2 md:text-base hidden md:block">History:</span>
               <input
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-xs md:toggle-md"
                 checked={storeHistoryChart}
                 onChange={() => handleCheckboxChange()}
               />

@@ -214,10 +214,10 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
         ) : (
           <div className="m-4 md:px-40">
             <div className="md:flex  flex-col md:justify-between py-2">
-              <div className="skeleton h-32 w-full mt-4"></div>
-              <div className="skeleton h-4 w-28 mt-4"></div>
-              <div className="skeleton h-4 w-full mt-4"></div>
-              <div className="skeleton h-4 w-full mt-4"></div>
+              <div className="skeleton h-32 w-full mt-2"></div>
+              <div className="skeleton h-4 w-28 mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
             </div>
           </div>
         )}

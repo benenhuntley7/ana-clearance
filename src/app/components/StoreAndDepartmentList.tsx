@@ -74,7 +74,11 @@ export const StoreAndDepartmentList = ({
         {storeList.length > 0 && departmentList.length > 0 ? (
           <form className="flex">
             <label className="form-control w-full max-w-xs pe-4">
-              <select id="storeSelect" className="select select-bordered" onChange={handleStoreSelectChange}>
+              <select
+                id="storeSelect"
+                className="select select-bordered select-sm md:select-md"
+                onChange={handleStoreSelectChange}
+              >
                 <option disabled defaultValue="">
                   Choose Store
                 </option>
@@ -86,7 +90,11 @@ export const StoreAndDepartmentList = ({
               </select>
             </label>
             <label className="form-control w-full max-w-xs">
-              <select id="storeSelect" className="select select-bordered" onChange={handleDepartmentSelectChange}>
+              <select
+                id="storeSelect"
+                className="select select-bordered select-sm md:select-md"
+                onChange={handleDepartmentSelectChange}
+              >
                 <option disabled defaultValue="">
                   Choose Department
                 </option>

@@ -57,13 +57,7 @@ export default function StoreData() {
       {storeData.length > 0 ? (
         <>
           <BarChart data={storeTotals} />
-          {filteredData.length > 0 && (
-            <StockInfo
-              storeData={filteredData}
-              setStoreData={setFilteredData}
-              selectedDepartment={selectedDepartment}
-            />
-          )}
+          <StockInfo storeData={filteredData} setStoreData={setFilteredData} selectedDepartment={selectedDepartment} />
         </>
       ) : (
         <LoadingPage />

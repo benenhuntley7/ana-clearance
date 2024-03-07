@@ -75,38 +75,39 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
   return (
     <>
       {/* Buttons for sorting data */}
-      {storeData.length > 0 ? (
-        <>
-          <div className="flex justify-center m-4">
-            <form className="flex items-center">
-              <button
-                className={`btn btn-sm md:btn-md btn-outline w-24 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
-                onClick={sortByCost}
-              >
-                Sort By SOH@Cost
-              </button>
-              <button className="btn btn-sm md:btn-md btn-outline w-24 me-4 " onClick={sortByAge}>
-                Sort By Age
-              </button>
-              <button
-                className={`btn btn-sm md:btn-md btn-outline w-24 me-2 ${sortedBy === "soh" ? "btn-active" : null}`}
-                onClick={sortBySOH}
-              >
-                Sort By SOH
-              </button>
-              <label className="label cursor-pointer">
-                <span className="label-text">Z5:</span>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  checked={onlyZ5}
-                  onClick={() => {
-                    setOnlyZ5(!onlyZ5);
-                  }}
-                />
-              </label>
-            </form>
-          </div>
+
+      <>
+        <div className="flex justify-center m-4">
+          <form className="flex items-center">
+            <button
+              className={`btn btn-sm md:btn-md btn-outline w-24 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
+              onClick={sortByCost}
+            >
+              Sort By SOH@Cost
+            </button>
+            <button className="btn btn-sm md:btn-md btn-outline w-24 me-4 " onClick={sortByAge}>
+              Sort By Age
+            </button>
+            <button
+              className={`btn btn-sm md:btn-md btn-outline w-24 me-2 ${sortedBy === "soh" ? "btn-active" : null}`}
+              onClick={sortBySOH}
+            >
+              Sort By SOH
+            </button>
+            <label className="label cursor-pointer">
+              <span className="label-text">Z5:</span>
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={onlyZ5}
+                onClick={() => {
+                  setOnlyZ5(!onlyZ5);
+                }}
+              />
+            </label>
+          </form>
+        </div>
+        {storeData.length > 0 ? (
           <div className="m-4 md:px-40">
             <div className="md:flex md:justify-between py-2">
               <p> {storeData.filter((row) => !onlyZ5 || row.z_status === "Z5").length} clearance lines</p>
@@ -211,8 +212,17 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
               </div>
             </div>
           </div>
-        </>
-      ) : null}
+        ) : (
+          <div className="m-4 md:px-40">
+            <div className="md:flex  flex-col md:justify-between py-2">
+              <div className="skeleton h-32 w-full"></div>
+              <div className="skeleton h-4 w-28"></div>
+              <div className="skeleton h-4 w-full"></div>
+              <div className="skeleton h-4 w-full"></div>
+            </div>
+          </div>
+        )}
+      </>
     </>
   );
 };

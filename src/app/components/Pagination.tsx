@@ -15,7 +15,7 @@ export const Pagination: React.FC<PaginationProps> = ({ storeData, currentPage, 
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <div className="flex justify-between w-full my-4">
+    <div className="flex  my-4">
       <button
         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         disabled={currentPage === 1}

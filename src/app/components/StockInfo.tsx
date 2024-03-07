@@ -218,6 +218,11 @@ export const StockInfo = ({ storeData, setStoreData, selectedDepartment }: Store
               <div className="skeleton h-4 w-28 mt-2"></div>
               <div className="skeleton h-4 w-full mt-2"></div>
               <div className="skeleton h-4 w-full mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
+              <div className="skeleton h-4 w-28 mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
+              <div className="skeleton h-4 w-full mt-2"></div>
             </div>
           </div>
         )}

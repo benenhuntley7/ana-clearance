@@ -6,9 +6,10 @@ import { StoreAndDepartmentList } from "./StoreAndDepartmentList";
 import { StockInfo } from "./StockInfo";
 import { getDepartmentList, getStoreData, getStoreList, getStoreTotals } from "../functions/supabase_functions";
 import { LoadingPage } from "./loadingSpinner";
+import { StoreDataInterface } from "../types/types";
 
 export default function StoreData() {
-  const [storeData, setStoreData] = useState<string[]>([]);
+  const [storeData, setStoreData] = useState<StoreDataInterface[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [storeTotals, setStoreTotals] = useState<any[]>([]);
 

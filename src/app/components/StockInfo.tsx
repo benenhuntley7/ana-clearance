@@ -14,6 +14,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
   const [onlyZ5, setOnlyZ5] = useState(false);
   const [currentPage, setCurrentPage] = useState(1); // for Pagination
   const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [rememberedPage, setRememberedPage] = useState(1); // for Pagination with Z5 checkbox. Remember last page to return to when gets unchecked.
 
   // useEffect to update filteredData when storeData or Z5 filter changes
   useEffect(() => {
@@ -31,46 +32,74 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
   const sortByCost = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const sortedData = [...storeData];
-    sortedData.sort((a, b) => {
-      return b.cost - a.cost;
-    });
-    setSortedBy("cost");
+    const sortedData = sortByDescription([...storeData]); // sort by description first.
+
+    if (sortedBy === "cost") {
+      // reverse if already sorted by cost.
+      setSortedBy("cost-reversed");
+      sortedData.sort((b, a) => {
+        return b.cost - a.cost;
+      });
+    } else {
+      // sort by cost.
+      setSortedBy("cost");
+      sortedData.sort((a, b) => {
+        return b.cost - a.cost;
+      });
+    }
+    setCurrentPage(1);
     setFilteredData(sortedData);
   };
 
   const sortBySOH = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const sortedData = [...storeData];
-    sortedData.sort((a, b) => {
-      return b.soh - a.soh;
-    });
-    setSortedBy("soh");
+    const sortedData = sortByDescription([...storeData]); // sort by description first.
+
+    if (sortedBy === "soh") {
+      // reverse sort if already sorted by soh.
+      setSortedBy("soh-reverse");
+      sortedData.sort((b, a) => {
+        return b.soh - a.soh;
+      });
+    } else {
+      setSortedBy("soh"); // sort by soh
+      sortedData.sort((a, b) => {
+        return b.soh - a.soh;
+      });
+    }
+    setCurrentPage(1);
     setFilteredData(sortedData);
   };
 
   const sortByAge = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const sortedData = [...storeData];
+    const sortedData = sortByDescription([...storeData]); // sort by description first.
+
+    if (sortedBy === "age") {
+      // revserse sort if already sorted by age
+      setSortedBy("age-reversed");
+      sortedData.sort((b, a) => {
+        return b.age - a.age;
+      });
+    } else {
+      setSortedBy("age"); // sort by age in descending order
+      sortedData.sort((a, b) => {
+        return b.age - a.age;
+      });
+    }
+    setCurrentPage(1);
+    setFilteredData(sortedData);
+  };
+
+  const sortByDescription = (data: any) => {
+    const sortedData = [...data];
     sortedData.sort((a, b) => {
       // First, sort by age in descending order
-      if (b.age !== a.age) {
-        return b.age - a.age;
-      }
-
-      // If age is the same, then sort by either cost or SOH based on sortedBy
-      if (sortedBy === "cost") {
-        return b.cost - a.cost;
-      } else if (sortedBy === "soh") {
-        return b.soh - a.soh;
-      }
-
-      return 0; // Default case, no change in order
+      return b.description - a.description;
     });
-
-    setFilteredData(sortedData);
+    return sortedData;
   };
 
   // Checkbox for when items are priced in store
@@ -90,30 +119,28 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
 
   // Checkbox for Z5
   const handleZ5CheckboxChange = () => {
+    if (!onlyZ5) {
+      setRememberedPage(currentPage);
+      setCurrentPage(1); // Reset current page to 1 when Z5 checkbox is clicked
+    } else {
+      setCurrentPage(rememberedPage);
+    }
     setOnlyZ5(!onlyZ5);
-    setCurrentPage(1); // Reset current page to 1 when Z5 checkbox is clicked
   };
 
   return (
     <>
       {/* Buttons for sorting data */}
-
       <>
         <div className="flex justify-center m-4">
           <form className="flex items-center">
-            <button
-              className={`btn btn-sm md:btn-md btn-outline w-24 me-4 ${sortedBy === "cost" ? "btn-active" : null}`}
-              onClick={sortByCost}
-            >
+            <button className={`btn btn-sm md:btn-md btn-outline w-24 me-4`} onClick={sortByCost}>
               Sort By SOH@Cost
             </button>
             <button className="btn btn-sm md:btn-md btn-outline w-24 me-4 " onClick={sortByAge}>
               Sort By Age
             </button>
-            <button
-              className={`btn btn-sm md:btn-md btn-outline w-24 me-2 ${sortedBy === "soh" ? "btn-active" : null}`}
-              onClick={sortBySOH}
-            >
+            <button className={`btn btn-sm md:btn-md btn-outline w-24 me-2`} onClick={sortBySOH}>
               Sort By SOH
             </button>
             <label className="label cursor-pointer">

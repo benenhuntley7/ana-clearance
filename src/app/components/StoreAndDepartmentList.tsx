@@ -3,10 +3,10 @@ import { getStoreData, getStoreTotals } from "../functions/supabase_functions";
 import { StoreDataInterface } from "../types/types";
 
 interface StoreAndDepartmentListProps {
-  storeList: any[]; // Adjust the type accordingly
+  storeList: any[];
   departmentList: any[];
   selectedDepartment: string;
-  storeData: any;
+  storeData: StoreDataInterface[];
   setStoreData: any;
   setStoreTotals: any;
   setSelectedDepartment: any;

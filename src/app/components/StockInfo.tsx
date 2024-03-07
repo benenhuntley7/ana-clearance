@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { setPriced } from "../functions/supabase_functions";
-import { LoadingPage } from "./loadingSpinner";
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly

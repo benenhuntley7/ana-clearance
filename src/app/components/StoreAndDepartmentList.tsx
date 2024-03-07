@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 import { getStoreData, getStoreTotals } from "../functions/supabase_functions";
 import { StoreDataInterface } from "../types/types";
-import { LoadingPage } from "./loadingSpinner";
 
 interface StoreAndDepartmentListProps {
   storeList: any[]; // Adjust the type accordingly

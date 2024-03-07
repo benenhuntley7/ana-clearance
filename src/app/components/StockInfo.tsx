@@ -48,6 +48,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
       });
     }
     setCurrentPage(1);
+    setOnlyZ5(false);
     setFilteredData(sortedData);
   };
 
@@ -69,6 +70,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
       });
     }
     setCurrentPage(1);
+    setOnlyZ5(false);
     setFilteredData(sortedData);
   };
 
@@ -90,6 +92,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
       });
     }
     setCurrentPage(1);
+    setOnlyZ5(false);
     setFilteredData(sortedData);
   };
 

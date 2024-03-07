@@ -121,7 +121,10 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
           <div className="m-4 md:px-40">
             <div className="md:flex md:justify-between py-2">
               <p> {storeData.filter((row) => !onlyZ5 || row.z_status === "Z5").length} clearance lines</p>
-              <p> Last updated: {new Date(storeData[0].updated_at).toLocaleString()}</p>
+              <p className="text-xs md:text-base">
+                {" "}
+                Last updated: {new Date(storeData[0].updated_at).toLocaleString()}
+              </p>
             </div>
 
             <Pagination

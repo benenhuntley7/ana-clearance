@@ -11,7 +11,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const getStoreData = async (store: string) => {
   try {
-    const { data, error } = await supabase.from("stock_with_age").select().eq("store", store);
+    const { data, error } = await supabase
+      .from("stock_with_age")
+      .select()
+      .eq("store", store)
+      .order("department")
+      .order("description");
     if (error) {
       console.error(error);
       return [];

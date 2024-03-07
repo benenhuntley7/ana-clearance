@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { setPriced } from "../functions/supabase_functions";
-import { Pagination } from "./Pagination";
 
-const ITEMS_PER_PAGE = 200;
+const ITEMS_PER_PAGE = 100;
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly
@@ -116,20 +115,12 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
             </label>
           </form>
         </div>
-
         {storeData.length > 0 ? (
           <div className="m-4 md:px-40">
             <div className="md:flex md:justify-between py-2">
               <p> {storeData.filter((row) => !onlyZ5 || row.z_status === "Z5").length} clearance lines</p>
               <p> Last updated: {new Date(storeData[0].updated_at).toLocaleString()}</p>
             </div>
-
-            <Pagination
-              storeData={storeData}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              ITEMS_PER_PAGE={ITEMS_PER_PAGE}
-            />
             <div className="overflow-x-auto">
               {/* Display table on medium or larger screens */}
               <table className="hidden md:table table-zebra-zebra">
@@ -147,7 +138,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentData
+                  {storeData
                     .filter((row) => !onlyZ5 || row.z_status === "Z5")
                     .slice(0, ITEMS_PER_PAGE)
                     .map((row) => (
@@ -177,7 +168,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
 
               {/* Display div with labels on smaller screens */}
               <div className="md:hidden text-sm min-w-full">
-                {currentData
+                {storeData
                   .filter((row) => !onlyZ5 || row.z_status === "Z5")
                   .slice(0, ITEMS_PER_PAGE)
                   .map((row, index) => (

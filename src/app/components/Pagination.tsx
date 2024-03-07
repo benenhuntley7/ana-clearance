@@ -22,13 +22,6 @@ export const Pagination = ({ storeData, currentPage, setCurrentPage, ITEMS_PER_P
   return (
     <div className="flex  my-4">
       <p>Page:</p>
-      {/*       <button
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        disabled={currentPage === 1}
-        className={currentPage === 1 ? "text-gray-400 me-2" : " me-2"}
-      >
-        Prev
-      </button> */}
       {pageNumbers.map((pageNumber) => (
         <button
           key={pageNumber}
@@ -39,13 +32,6 @@ export const Pagination = ({ storeData, currentPage, setCurrentPage, ITEMS_PER_P
           {pageNumber}
         </button>
       ))}
-      {/*       <button
-        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-        disabled={currentPage === totalPages}
-        className={currentPage === totalPages ? "text-gray-400 me-2" : " me-2"}
-      >
-        Next
-      </button> */}
     </div>
   );
 };

@@ -88,6 +88,12 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
     }
   };
 
+  // Checkbox for Z5
+  const handleZ5CheckboxChange = () => {
+    setOnlyZ5(!onlyZ5);
+    setCurrentPage(1); // Reset current page to 1 when Z5 checkbox is clicked
+  };
+
   return (
     <>
       {/* Buttons for sorting data */}
@@ -112,14 +118,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
             </button>
             <label className="label cursor-pointer">
               <span className="label-text">Z5:</span>
-              <input
-                type="checkbox"
-                className="checkbox"
-                checked={onlyZ5}
-                onClick={() => {
-                  setOnlyZ5(!onlyZ5);
-                }}
-              />
+              <input type="checkbox" className="checkbox" checked={onlyZ5} onChange={handleZ5CheckboxChange} />
             </label>
           </form>
         </div>

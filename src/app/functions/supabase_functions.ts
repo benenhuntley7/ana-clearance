@@ -104,3 +104,29 @@ export const getStoreList = async () => {
     return [];
   }
 };
+
+export const getStoreHistory = async (store: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("stock_value_history")
+      .select("created_at,department,total_cost")
+      .eq("store", store);
+    if (error) {
+      console.error(error);
+      return [];
+    } else {
+      // Sort the stores alphabetically
+      const sortedHistory = data.sort((a, b) => {
+        // First, sort by created_at in descending order
+        const createdDateComparison = new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+
+        // If created_at values are equal, sort by department alphabetically
+        return createdDateComparison !== 0 ? createdDateComparison : a.department.localeCompare(b.department);
+      });
+      return sortedHistory;
+    }
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};

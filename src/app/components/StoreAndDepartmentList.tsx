@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect } from "react";
-import { getStoreData, getStoreTotals } from "../functions/supabase_functions";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { getStoreData, getStoreHistory, getStoreTotals } from "../functions/supabase_functions";
 import { StoreDataInterface } from "../types/types";
 
 interface StoreAndDepartmentListProps {
@@ -9,8 +9,12 @@ interface StoreAndDepartmentListProps {
   storeData: StoreDataInterface[];
   setStoreData: any;
   setStoreTotals: any;
-  setSelectedDepartment: any;
+  setSelectedDepartment: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedStore: React.Dispatch<React.SetStateAction<string>>;
   setFilteredData: any;
+  setStoreHistory: any;
+  storeHistoryChart: boolean;
+  setStoreHistoryChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StoreAndDepartmentList = ({
@@ -21,16 +25,23 @@ export const StoreAndDepartmentList = ({
   setStoreData,
   setStoreTotals,
   setSelectedDepartment,
+  setSelectedStore,
   setFilteredData,
+  setStoreHistory,
+  storeHistoryChart,
+  setStoreHistoryChart,
 }: StoreAndDepartmentListProps) => {
   const handleStoreSelectChange = async (event: ChangeEvent<HTMLSelectElement>) => {
     setStoreData([]);
     const selectedStore = event.target.value;
     const data = await getStoreData(selectedStore);
     const totals = await getStoreTotals(selectedStore);
+    const history = await getStoreHistory(selectedStore);
 
+    setSelectedStore(selectedStore);
     setStoreData(data);
     setStoreTotals(totals);
+    setStoreHistory(history);
   };
 
   const handleDepartmentSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -52,6 +63,10 @@ export const StoreAndDepartmentList = ({
 
     getAndSetDepartmentData();
   }, [selectedDepartment, storeData, setFilteredData]);
+
+  const handleCheckboxChange = () => {
+    setStoreHistoryChart(!storeHistoryChart);
+  };
 
   return (
     <>
@@ -82,6 +97,15 @@ export const StoreAndDepartmentList = ({
                   </option>
                 ))}
               </select>
+            </label>
+            <label className="label cursor-pointer ms-2">
+              <span className="me-2 text-sm md:text-base">History:</span>
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={storeHistoryChart}
+                onChange={() => handleCheckboxChange()}
+              />
             </label>
           </form>
         ) : null}

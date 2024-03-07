@@ -14,3 +14,11 @@ export interface StoreDataInterface {
   age: number;
   updated_at: string;
 }
+
+export interface StoreHistoryInterface {
+  id: number;
+  created_at: string;
+  store: string;
+  department: string;
+  total_cost: number;
+}

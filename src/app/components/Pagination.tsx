@@ -21,6 +21,7 @@ export const Pagination = ({ storeData, currentPage, setCurrentPage, ITEMS_PER_P
 
   return (
     <div className="flex  my-4">
+      Page:
       {/*       <button
         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         disabled={currentPage === 1}
@@ -33,7 +34,7 @@ export const Pagination = ({ storeData, currentPage, setCurrentPage, ITEMS_PER_P
           key={pageNumber}
           onClick={() => setCurrentPage(pageNumber)}
           disabled={currentPage === pageNumber}
-          className={currentPage === pageNumber ? "font-bold me-2" : " me-2"}
+          className={currentPage === pageNumber ? "font-bold ms-2" : " ms-2"}
         >
           {pageNumber}
         </button>

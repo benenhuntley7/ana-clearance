@@ -6,6 +6,7 @@ export type Roles = "admin" | "moderator";
 declare global {
   interface CustomJwtSessionClaims {
     metadata: {
+      store: any;
       role?: Roles;
     };
   }

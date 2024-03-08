@@ -110,20 +110,13 @@ export const getStoreHistory = async (store: string) => {
     const { data, error } = await supabase
       .from("stock_value_history")
       .select("created_at,department,total_cost")
-      .eq("store", store);
+      .eq("store", store)
+      .order("created_at");
     if (error) {
       console.error(error);
       return [];
     } else {
-      // Sort the stores alphabetically
-      const sortedHistory = data.sort((b, a) => {
-        // First, sort by created_at in descending order
-        const createdDateComparison = new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-
-        // If created_at values are equal, sort by department alphabetically
-        return createdDateComparison !== 0 ? createdDateComparison : a.department.localeCompare(b.department);
-      });
-      return sortedHistory;
+      return data;
     }
   } catch (err) {
     console.error(err);

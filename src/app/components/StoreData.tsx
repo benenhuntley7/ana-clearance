@@ -14,7 +14,11 @@ import {
 import { LoadingPage } from "./loadingSpinner";
 import { StoreDataInterface } from "../types/types";
 
-export default function StoreData() {
+interface StoreDataProps {
+  defaultStore: string;
+}
+
+export default function StoreData({ defaultStore }: StoreDataProps) {
   const [storeData, setStoreData] = useState<StoreDataInterface[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [storeTotals, setStoreTotals] = useState<any[]>([]);
@@ -38,11 +42,11 @@ export default function StoreData() {
         setDepartmentList(departments); // No need for type assertion with a default value
 
         if (stores.length > 0) {
-          const stock = await getStoreData(stores[0]);
-          const totals = await getStoreTotals(stores[0]);
-          const history = await getStoreHistory(stores[0]);
+          const stock = await getStoreData(defaultStore);
+          const totals = await getStoreTotals(defaultStore);
+          const history = await getStoreHistory(defaultStore);
 
-          setSelectedStore(stores[0]);
+          setSelectedStore(defaultStore);
           setStoreData(stock);
           setStoreTotals(totals);
           setStoreHistory(history);
@@ -66,11 +70,13 @@ export default function StoreData() {
         setStoreData={setStoreData}
         setStoreTotals={setStoreTotals}
         setSelectedDepartment={setSelectedDepartment}
+        selectedStore={selectedStore}
         setSelectedStore={setSelectedStore}
         setFilteredData={setFilteredData}
         setStoreHistory={setStoreHistory}
         storeHistoryChart={storeHistoryChart}
         setStoreHistoryChart={setStoreHistoryChart}
+        defaultStore={defaultStore}
       />
       {storeData.length > 0 ? (
         <>

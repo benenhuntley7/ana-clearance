@@ -10,11 +10,13 @@ interface StoreAndDepartmentListProps {
   setStoreData: any;
   setStoreTotals: any;
   setSelectedDepartment: React.Dispatch<React.SetStateAction<string>>;
+  selectedStore: string;
   setSelectedStore: React.Dispatch<React.SetStateAction<string>>;
   setFilteredData: any;
   setStoreHistory: any;
   storeHistoryChart: boolean;
   setStoreHistoryChart: React.Dispatch<React.SetStateAction<boolean>>;
+  defaultStore: string;
 }
 
 export const StoreAndDepartmentList = ({
@@ -25,11 +27,13 @@ export const StoreAndDepartmentList = ({
   setStoreData,
   setStoreTotals,
   setSelectedDepartment,
+  selectedStore,
   setSelectedStore,
   setFilteredData,
   setStoreHistory,
   storeHistoryChart,
   setStoreHistoryChart,
+  defaultStore,
 }: StoreAndDepartmentListProps) => {
   const handleStoreSelectChange = async (event: ChangeEvent<HTMLSelectElement>) => {
     setStoreData([]);
@@ -78,6 +82,7 @@ export const StoreAndDepartmentList = ({
                 id="storeSelect"
                 className="select select-bordered select-sm md:select-md"
                 onChange={handleStoreSelectChange}
+                value={selectedStore}
               >
                 <option disabled defaultValue="">
                   Choose Store

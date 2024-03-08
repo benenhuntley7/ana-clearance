@@ -10,6 +10,8 @@ export default async function Home() {
     redirect("/sign-in");
   }
 
+  const defaultStore = sessionClaims.metadata.store;
+
   return (
     <>
       {checkEmail(sessionClaims.email as string) ? (
@@ -18,7 +20,7 @@ export default async function Home() {
             <LoadingPage />
           </ClerkLoading>
           <ClerkLoaded>
-            <StoreData />
+            <StoreData defaultStore={defaultStore} />
           </ClerkLoaded>
         </>
       ) : (

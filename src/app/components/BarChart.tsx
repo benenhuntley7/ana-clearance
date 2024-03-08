@@ -53,7 +53,7 @@ export const BarChart = ({ data, history, selectedDepartment, storeHistoryChart 
   return (
     <div className="flex justify-center px-2">
       <div className="w-11/12 md:w-1/2">
-        <p className="text-center text-sm my-2">Store Total: ${grandTotal.toLocaleString()}</p>
+        <p className="text-center text-sm my-2">Store Total: ${CurrencyFormatter.format(grandTotal)}</p>
         <Bar data={chartData} options={options} />
       </div>
     </div>
@@ -88,3 +88,9 @@ function getTotalCostArray(data: StoreHistoryInterface[], selectedDepartment: st
     return data.filter((entry) => entry.department === selectedDepartment).map((entry) => entry.total_cost);
   }
 }
+
+// Function to format to 2 decimal places for currency display
+const CurrencyFormatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});

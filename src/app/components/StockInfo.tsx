@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setPriced } from "../functions/supabase_functions";
 import { Pagination } from "./Pagination";
 
-const ITEMS_PER_PAGE = 200;
+const ITEMS_PER_PAGE = 100;
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly
@@ -162,7 +162,6 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
                 Last updated: {new Date(storeData[0].updated_at).toLocaleString()}
               </p>
             </div>
-
             <Pagination
               storeData={filteredData}
               currentPage={currentPage}
@@ -263,6 +262,12 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
                 ))}
               </div>
             </div>
+            <Pagination
+              storeData={filteredData}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              ITEMS_PER_PAGE={ITEMS_PER_PAGE}
+            />
           </div>
         ) : (
           <div className="m-4 md:px-40">

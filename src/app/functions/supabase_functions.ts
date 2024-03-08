@@ -116,7 +116,7 @@ export const getStoreHistory = async (store: string) => {
       return [];
     } else {
       // Sort the stores alphabetically
-      const sortedHistory = data.sort((a, b) => {
+      const sortedHistory = data.sort((b, a) => {
         // First, sort by created_at in descending order
         const createdDateComparison = new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 

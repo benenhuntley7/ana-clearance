@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setPriced } from "../functions/supabase_functions";
 import { Pagination } from "./Pagination";
 
-const ITEMS_PER_PAGE = 100;
+const ITEMS_PER_PAGE = 150;
 
 interface StoreDataProps {
   storeData: any[]; // Adjust the type accordingly

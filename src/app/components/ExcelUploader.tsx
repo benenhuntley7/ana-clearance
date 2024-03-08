@@ -94,6 +94,22 @@ const ExcelUploader = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    try {
+      const { data, error } = await supabase.from("store_department_total_cost").select();
+      if (data) {
+        const dataToUpsert = data.map(({ store, department, total_cost }) => ({
+          store,
+          department,
+          total_cost,
+        }));
+
+        const upsertResponse = await supabase.from("stock_value_history").upsert(dataToUpsert);
+        console.log("History updated successfully:", upsertResponse);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (

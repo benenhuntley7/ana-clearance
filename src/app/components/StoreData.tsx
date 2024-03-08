@@ -13,7 +13,6 @@ import {
 } from "../functions/supabase_functions";
 import { LoadingPage } from "./loadingSpinner";
 import { StoreDataInterface } from "../types/types";
-import { HistoryBarChart } from "./HistoryBarChart";
 
 export default function StoreData() {
   const [storeData, setStoreData] = useState<StoreDataInterface[]>([]);
@@ -75,11 +74,12 @@ export default function StoreData() {
       />
       {storeData.length > 0 ? (
         <>
-          {storeHistoryChart ? (
-            <HistoryBarChart data={storeHistory} selectedDepartment={selectedDepartment} />
-          ) : (
-            <BarChart data={storeTotals} />
-          )}
+          <BarChart
+            data={storeTotals}
+            history={storeHistory}
+            selectedDepartment={selectedDepartment}
+            storeHistoryChart={storeHistoryChart}
+          />
           <StockInfo storeData={filteredData} setStoreData={setFilteredData} />
         </>
       ) : (

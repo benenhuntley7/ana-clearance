@@ -76,7 +76,7 @@ const ExcelUploader = () => {
           store: row.store,
           department: row.department,
           z_status: row.z_status,
-          cost: row.cost,
+          cost: Math.abs(row.cost),
           rrp: row.rrp,
           soh: row.soh,
           description: row.description, // included description

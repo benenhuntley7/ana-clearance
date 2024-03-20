@@ -232,14 +232,14 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
                           <td style={{ width: "20%" }}>${CurrencyFormatter.format(row.map)}</td>
                           <td style={{ width: "15%" }}>Status:</td>
                           <td>{row.z_status}</td>
-                          <td>Priced</td>
+                          {/*                          <td>Priced</td> */}
                         </tr>
                         <tr>
                           <td>SOH@Cost:</td>
                           <td>${CurrencyFormatter.format(row.cost)}</td>
                           <td style={{ width: "20%" }}>SOH:</td>
                           <td>{row.soh}</td>
-                          <td>
+                          {/*                           <td>
                             <label className="label cursor-pointer">
                               <input
                                 type="checkbox"
@@ -248,7 +248,7 @@ export const StockInfo = ({ storeData, setStoreData }: StoreDataProps) => {
                                 onChange={() => handleCheckboxChange(row.id, row)}
                               />
                             </label>
-                          </td>
+                          </td> */}
                         </tr>
                         <tr>
                           <td>RRP:</td>
